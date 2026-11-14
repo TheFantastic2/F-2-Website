@@ -267,6 +267,24 @@
     }
 
     .stories {
+      display: block;
+    }
+
+    .mission-era {
+      margin-top: 30px;
+    }
+
+    .mission-era:first-child {
+      margin-top: 0;
+    }
+
+    .mission-era h2 {
+      margin: 0 0 14px;
+      color: var(--blue);
+      font-size: 1.5rem;
+    }
+
+    .mission-era-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 16px;
@@ -549,7 +567,7 @@
     }
 
     @media (max-width: 900px) {
-      .stories {
+      .mission-era-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
@@ -559,7 +577,7 @@
         padding-top: 32px;
       }
 
-      .stories {
+      .mission-era-grid {
         grid-template-columns: 1fr;
       }
 
@@ -610,12 +628,12 @@
       <li><a href="https://science.nasa.gov/mission/viking-1/" target="_blank" rel="noopener noreferrer">Viking 1 — NASA</a></li>
       <li><a href="https://science.nasa.gov/mission/msl-curiosity/" target="_blank" rel="noopener noreferrer">Curiosity — NASA</a></li>
       <li><a href="https://science.nasa.gov/mission/voyager/" target="_blank" rel="noopener noreferrer">Voyager 1 — NASA</a></li>
+      <li><a href="https://science.nasa.gov/mission/voyager-2/" target="_blank" rel="noopener noreferrer">Voyager 2 — NASA</a></li>
       <li><a href="https://science.nasa.gov/mission/hubble/" target="_blank" rel="noopener noreferrer">Hubble Space Telescope — NASA</a></li>
       <li><a href="https://science.nasa.gov/mission/lro/" target="_blank" rel="noopener noreferrer">Lunar Reconnaissance Orbiter — NASA</a></li>
       <li><a href="https://science.nasa.gov/mission/pioneer-10/" target="_blank" rel="noopener noreferrer">Pioneer 10 — NASA</a></li>
       <li><a href="https://science.nasa.gov/mission/mars-2020-perseverance/" target="_blank" rel="noopener noreferrer">Perseverance — NASA</a></li>
       <li><a href="https://science.nasa.gov/mission/cassini/" target="_blank" rel="noopener noreferrer">Cassini — NASA</a></li>
-      <li><a href="https://www.planetary.org/space-missions/change-4" target="_blank" rel="noopener noreferrer">Chang’e 4 — The Planetary Society</a></li>
       <li><a href="https://science.nasa.gov/mission/magellan/" target="_blank" rel="noopener noreferrer">Magellan — NASA</a></li>
       <li><a href="https://www.nasa.gov/mission/apollo-15/" target="_blank" rel="noopener noreferrer">Apollo 15 lunar rover — NASA</a></li>
       <li><a href="https://science.nasa.gov/mission/mer-opportunity/" target="_blank" rel="noopener noreferrer">Opportunity — NASA</a></li>
@@ -665,7 +683,7 @@
     <section aria-label="Space hardware stories">
       <div class="stories" id="stories">
         <article class="story" data-place="moon" tabindex="0" role="link" aria-label="Read the full story: Apollo 11's Moon mirror">
-          <img class="mission-image" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/A_Man_on_the_Moon%2C_AS11-40-5903_%28cropped%29.jpg/960px-A_Man_on_the_Moon%2C_AS11-40-5903_%28cropped%29.jpg" alt="Apollo 11 astronaut working on the lunar surface">
+          <img class="mission-image" src="https://www.nasa.gov/wp-content/uploads/2023/03/apollo-astronaut-1041.jpg" alt="Apollo 11 astronaut working on the lunar surface">
           <div class="story-content">
             <div class="story-topline">
               <span class="location">Moon</span>
@@ -684,7 +702,7 @@
         </article>
 
         <article class="story" data-place="mars" tabindex="0" role="link" aria-label="Read the full story: Viking 1 lander">
-          <img class="mission-image" src="https://images-assets.nasa.gov/image/PIA00571/PIA00571~orig.jpg" alt="A view of the Martian landscape captured by a Viking lander">
+          <img class="mission-image" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/Viking_spacecraft.jpg/960px-Viking_spacecraft.jpg" alt="A view of the Martian landscape captured by a Viking lander">
           <div class="story-content">
             <div class="story-topline">
               <span class="location">Mars</span>
@@ -722,7 +740,7 @@
         </article>
 
         <article class="story" data-place="deep-space" tabindex="0" role="link" aria-label="Read the full story: Voyager 1">
-          <img class="mission-image" src="https://images-assets.nasa.gov/image/PIA17046/PIA17046~orig.jpg" alt="A view of Earth from the distant Voyager spacecraft">
+          <img class="mission-image" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/6/60/Voyager_spacecraft_model.png/960px-Voyager_spacecraft_model.png" alt="Voyager spacecraft">
           <div class="story-content">
             <div class="story-topline">
               <span class="location">Deep space</span>
@@ -742,7 +760,7 @@
         </article>
 
         <article class="story" data-place="earth-orbit" tabindex="0" role="link" aria-label="Read the full story: Hubble Space Telescope">
-          <img class="mission-image" src="https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001492/GSFC_20171208_Archive_e001492~orig.jpg" alt="The Hubble Space Telescope in orbit above Earth">
+          <img class="mission-image" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/Hubble_2009_close-up_2.jpg/960px-Hubble_2009_close-up_2.jpg" alt="The Hubble Space Telescope">
           <div class="story-content">
             <div class="story-topline">
               <span class="location">Earth orbit</span>
@@ -760,7 +778,7 @@
         </article>
 
         <article class="story" data-place="moon" tabindex="0" role="link" aria-label="Read the full story: Lunar Reconnaissance Orbiter">
-          <img class="mission-image" src="https://images-assets.nasa.gov/image/PIA18072/PIA18072~orig.jpg" alt="The Moon's surface seen by the Lunar Reconnaissance Orbiter">
+          <img class="mission-image" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Lunar_Reconnaissance_Orbiter_001.jpg/960px-Lunar_Reconnaissance_Orbiter_001.jpg" alt="Lunar Reconnaissance Orbiter">
           <div class="story-content">
             <div class="story-topline">
               <span class="location">Moon</span>
@@ -778,7 +796,7 @@
         </article>
 
         <article class="story" data-place="deep-space" tabindex="0" role="link" aria-label="Read the full story: Pioneer 10">
-          <img class="mission-image" src="https://images-assets.nasa.gov/image/PIA21436/PIA21436~orig.jpg" alt="Pioneer 10 in deep space beyond the planets">
+          <img class="mission-image" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3d/Pioneer_10_%2818427352949%29.jpg/960px-Pioneer_10_%2818427352949%29.jpg" alt="Pioneer 10">
           <div class="story-content">
             <div class="story-topline">
               <span class="location">Deep space</span>
@@ -795,8 +813,27 @@
           </div>
         </article>
 
+        <article class="story" data-place="deep-space" tabindex="0" role="link" aria-label="Read the full story: Voyager 2">
+          <img class="mission-image" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/6/60/Voyager_spacecraft_model.png/960px-Voyager_spacecraft_model.png" alt="Voyager 2 spacecraft">
+          <div class="story-content">
+            <div class="story-topline">
+              <span class="location">Deep space</span>
+              <span>1977</span>
+            </div>
+            <h2>Voyager 2</h2>
+            <p>Continuing its grand tour of the outer planets, sending back data from the edge of the heliosphere.</p>
+            <p>Voyager 2 followed a path that took it past Jupiter, Saturn, Uranus, and Neptune, giving humanity its first close-up views of the giant outer worlds and the space between them.</p>
+            <div class="mission-chapters">
+              <section class="chapter"><h3>Chapter 1: A grand tour</h3><p>Voyager 2 launched in 1977 on a path that carried it past Jupiter, Saturn, Uranus, and Neptune, giving humanity its first close-up views of the outer planets.</p></section>
+              <section class="chapter"><h3>Chapter 2: Ice giants revealed</h3><p>Its flybys transformed our understanding of Uranus and Neptune, revealing their rings, moons, and complex atmospheres in remarkable detail.</p></section>
+              <section class="chapter"><h3>Chapter 3: Still out there</h3><p>Voyager 2 is still operating far beyond the planets, carrying the Golden Record and continuing to send scientific information from interstellar space.</p></section>
+            </div>
+            <div class="status"><strong>Status:</strong> Active — still transmitting data from the outer solar system.</div>
+          </div>
+        </article>
+
         <article class="story" data-place="mars" tabindex="0" role="link" aria-label="Read the full story: Perseverance rover">
-          <img class="mission-image" src="https://images-assets.nasa.gov/image/PIA24631/PIA24631~orig.jpg" alt="Perseverance rover on the surface of Mars">
+          <img class="mission-image" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/Perseverance-Selfie-at-Rochette-Horizontal-V2.gif/960px-Perseverance-Selfie-at-Rochette-Horizontal-V2.gif" alt="Perseverance rover on the surface of Mars">
           <div class="story-content">
             <div class="story-topline">
               <span class="location">Mars</span>
@@ -814,7 +851,7 @@
         </article>
 
         <article class="story" data-place="saturn" tabindex="0" role="link" aria-label="Read the full story: Cassini spacecraft">
-          <img class="mission-image" src="https://images-assets.nasa.gov/image/PIA17172/PIA17172~orig.jpg" alt="Cassini spacecraft crossing Saturn's rings and moons">
+          <img class="mission-image" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Cassini_Saturn_Orbit_Insertion.jpg/960px-Cassini_Saturn_Orbit_Insertion.jpg" alt="Cassini spacecraft crossing Saturn's rings and moons">
           <div class="story-content">
             <div class="story-topline">
               <span class="location">Saturn</span>
@@ -831,26 +868,8 @@
           </div>
         </article>
 
-        <article class="story" data-place="moon" tabindex="0" role="link" aria-label="Read the full story: Chang'e 4 lander">
-          <img class="mission-image" src="https://images-assets.nasa.gov/image/PIA22952/PIA22952~orig.jpg" alt="The Chang'e 4 lander on the far side of the Moon">
-          <div class="story-content">
-            <div class="story-topline">
-              <span class="location">Moon</span>
-              <span>2019</span>
-            </div>
-            <h2>Chang'e 4</h2>
-            <p>The first mission to make a soft landing on the far side of the Moon.</p>
-            <div class="mission-chapters">
-              <section class="chapter"><h3>Chapter 1: A hidden hemisphere</h3><p>Landing Site: The Chinese probe Chang’e 4 made its landing on the surface of the Von Kármán crater on the Moon’s far side for the first time ever.</p></section>
-              <section class="chapter"><h3>Chapter 2: Lunar communication</h3><p>It utilized a relay satellite that was placed in space to communicate with the far side, which is inaccessible directly from Earth.</p></section>
-              <section class="chapter"><h3>Chapter 3: A scientific first</h3><p>The mission investigated the lunar surface, analyzed its surrounding environment, and captured images that have revolutionized our scientific perception of the Moon’s far side.</p></section>
-            </div>
-            <div class="status"><strong>Status:</strong> Active — still operating and relaying lunar data.</div>
-          </div>
-        </article>
-
         <article class="story" data-place="venus" tabindex="0" role="link" aria-label="Read the full story: Magellan orbiter">
-          <img class="mission-image" src="https://images-assets.nasa.gov/image/PIA00120/PIA00120~orig.jpg" alt="Magellan radar image of Venus's volcanic surface">
+          <img class="mission-image" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/Magellan_at_Kennedy_Space_Center.jpg/960px-Magellan_at_Kennedy_Space_Center.jpg" alt="Magellan spacecraft at Kennedy Space Center">
           <div class="story-content">
             <div class="story-topline">
               <span class="location">Venus</span>
@@ -886,7 +905,7 @@
         </article>
 
         <article class="story" data-place="mars" tabindex="0" role="link" aria-label="Read the full story: Opportunity rover">
-          <img class="mission-image" src="https://images-assets.nasa.gov/image/PIA17563/PIA17563~orig.jpg" alt="Opportunity rover exploring the Martian surface">
+          <img class="mission-image" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d8/NASA_Mars_Rover.jpg/960px-NASA_Mars_Rover.jpg" alt="Opportunity rover exploring the Martian surface">
           <div class="story-content">
             <div class="story-topline">
               <span class="location">Mars</span>
@@ -904,7 +923,7 @@
         </article>
 
         <article class="story" data-place="deep-space" tabindex="0" role="link" aria-label="Read the full story: New Horizons">
-          <img class="mission-image" src="https://images-assets.nasa.gov/image/PIA19873/PIA19873~orig.jpg" alt="The New Horizons spacecraft in deep space near Pluto">
+          <img class="mission-image" src="https://upload.wikimedia.org/wikipedia/commons/e/ee/New_Horizons_spacecraft_model_1.png" alt="The New Horizons spacecraft">
           <div class="story-content">
             <div class="story-topline">
               <span class="location">Deep space</span>
@@ -922,7 +941,7 @@
         </article>
 
         <article class="story" data-place="jupiter" tabindex="0" role="link" aria-label="Read the full story: Juno orbiter">
-          <img class="mission-image" src="https://images-assets.nasa.gov/image/PIA21922/PIA21922~orig.jpg" alt="Juno orbiter flying over Jupiter's colorful atmosphere">
+          <img class="mission-image" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Juno_spacecraft_model_1.png/960px-Juno_spacecraft_model_1.png" alt="Juno orbiter">
           <div class="story-content">
             <div class="story-topline">
               <span class="location">Jupiter</span>
@@ -982,12 +1001,12 @@
       ["Viking 1 lander", "Viking 1 combined a protective aeroshell and parachute with a rocket-powered soft-landing system. On the surface, its body carried cameras, meteorology sensors, a robotic sample arm, and a biology laboratory that processed Martian soil.", "The lander's radio system sent science and engineering data to Earth, while its power and thermal-control systems kept instruments operating through the cold Martian environment. Its camera pair produced color panoramas of the landing site."],
       ["Curiosity rover", "Curiosity is a nuclear-powered mobile laboratory. Its radioisotope power system supplies electricity and heat; six wheels and suspension let it cross rough terrain. The robotic arm carries a drill and contact instruments for examining rock directly.", "The mast-mounted cameras and ChemCam laser investigate distant targets. SAM analyzes samples for chemical compounds, while CheMin identifies minerals using X-ray diffraction. These systems let the rover study rocks without returning them to Earth."],
       ["Voyager 1", "Voyager 1 is a three-axis-stabilized spacecraft with a 3.7-meter high-gain antenna for long-distance radio communication. Three radioisotope thermoelectric generators provide electricity as sunlight becomes too weak to use solar panels.", "Its magnetometer, plasma-wave instrument, and low-energy charged-particle instrument measure the interstellar environment. The spacecraft's computer and attitude-control system carefully point the antenna toward Earth; power-saving shutdowns preserve operation as available energy declines."],
+      ["Voyager 2", "Voyager 2 is a twin of Voyager 1, built to reach the outer planets on a different trajectory. It uses a large high-gain antenna for long-distance communication and radioisotope thermoelectric generators to provide power far from the Sun.", "Its suite of instruments studies magnetism, plasma, particles, and the environment beyond the planets. The spacecraft continues to transmit data from interstellar space, sending information about the outer heliosphere and the space beyond it."],
       ["Hubble Space Telescope", "Hubble is a roughly 2.4-meter-aperture reflecting telescope in low Earth orbit. A precise optical assembly feeds light to cameras and spectrographs, which record images and split light into spectra for study across ultraviolet, visible, and near-infrared wavelengths.", "Solar arrays generate power, reaction wheels control pointing, and gyroscopes help it stay steady during long exposures. Its modular design allowed astronauts to service and upgrade instruments during space-shuttle missions."],
       ["Lunar Reconnaissance Orbiter", "LRO is a compact lunar orbiter carrying seven instruments. The Lunar Reconnaissance Orbiter Camera takes wide-angle context images and narrow-angle high-resolution images; LOLA uses laser pulses to map lunar elevation and surface roughness.", "Other instruments measure temperature, radiation, and reflected ultraviolet light, while Mini-RF uses radar to examine properties of permanently shadowed regions. Together, the payload maps terrain and helps characterize the lunar environment."],
       ["Pioneer 10", "Pioneer 10 used a spin-stabilized design: the spacecraft rotated like a gyroscope to remain steady. Its large high-gain antenna communicated with Earth, and radioisotope thermoelectric generators supplied power far from the Sun.", "The science payload included imaging equipment and instruments for measuring Jupiter's magnetic field, radiation belts, charged particles, dust, and meteoroids. A gold-anodized aluminum plaque carried a pictorial message about the spacecraft's origin."],
       ["Perseverance rover", "Perseverance is a nuclear-powered, six-wheeled rover based on the Curiosity design, with upgraded autonomous navigation and a drill system that seals rock cores in sample tubes. Its mast cameras provide stereo views and help select targets.", "SuperCam studies rocks from a distance using imaging, laser spectroscopy, and sound; PIXL and SHERLOC examine chemistry and minerals up close. MOXIE demonstrated oxygen production from Martian carbon dioxide, and the rover's sample caching system preserves selected specimens."],
       ["Cassini", "Cassini was a large, three-axis-stabilized orbiter powered by three radioisotope thermoelectric generators. Its high-gain antenna provided communications and also served as a radar dish to map Saturn's cloud-covered moon Titan.", "The orbiter carried cameras, spectrometers, magnetometers, and fields-and-particles instruments. The Huygens probe separated from Cassini and descended through Titan's atmosphere, using parachutes and its own instruments to send measurements from the surface."],
-      ["Chang'e 4", "The Chang'e 4 mission uses a stationary lander and the Yutu-2 rover. The lander carries cameras and scientific instruments, while the rover's wheels, panoramic cameras, and ground-penetrating radar support mobile exploration of the lunar surface and shallow subsurface.", "Because the Moon blocks direct radio contact with the far side, the Queqiao relay satellite was placed near the Earth–Moon L2 region. It relays commands and science data between Earth and the lander-rover pair."],
       ["Magellan", "Magellan was a Venus orbiter built around synthetic-aperture radar, which transmitted radio pulses and processed their echoes to form surface images through the planet's dense clouds. Radar altimetry measured elevation, while radiometry helped characterize surface properties.", "The spacecraft used a high-gain antenna for radar observations and communications, plus solar panels for power. Its mapping campaign built a near-global picture of Venus and revealed features that cameras in visible light could not see."],
       ["Apollo 15 lunar rover", "The Lunar Roving Vehicle was a lightweight, battery-powered electric cart folded into the Apollo Lunar Module for landing. Its chassis unfolded on the Moon; four independently driven wheels and steering systems carried two suited astronauts across the surface.", "The rover included hand controllers, navigation displays, fenders, and equipment mounts for tools and samples. Its wire-mesh wheels and low-gravity design provided mobility over uneven terrain, extending the crew's geological range well beyond the landing site."],
       ["Opportunity rover", "Opportunity was a solar-powered Mars Exploration Rover with six wheels, rocker-bogie suspension, stereo navigation cameras, and a robotic arm. Solar arrays charged rechargeable batteries, while heaters protected electronics through cold Martian nights.", "Its science tools included a panoramic camera, a microscopic imager, a Mössbauer spectrometer, an alpha-particle X-ray spectrometer, and a rock-abrasion tool. These instruments let scientists inspect textures and determine the composition of rocks and soil."],
@@ -1045,6 +1064,38 @@
     const aboutDialog = document.querySelector("#about-dialog");
     document.querySelector("#open-about").addEventListener("click", () => aboutDialog.showModal());
     document.querySelector("#close-about").addEventListener("click", () => aboutDialog.close());
+
+    const storiesContainer = document.querySelector("#stories");
+    const missionEras = [
+      { label: "Newest · 2010s–present", start: 2010, end: Infinity },
+      { label: "2000s", start: 2000, end: 2009 },
+      { label: "1990s", start: 1990, end: 1999 },
+      { label: "1980s", start: 1980, end: 1989 },
+      { label: "1970s", start: 1970, end: 1979 },
+      { label: "1960s", start: 1960, end: 1969 }
+    ];
+    const missionCards = [...storiesContainer.querySelectorAll(":scope > .story")];
+
+    missionEras.forEach((era) => {
+      const eraCards = missionCards
+        .filter((story) => {
+          const year = Number(story.querySelector(".story-topline span:last-child").textContent);
+          return year >= era.start && year <= era.end;
+        })
+        .sort((a, b) => Number(b.querySelector(".story-topline span:last-child").textContent) - Number(a.querySelector(".story-topline span:last-child").textContent));
+      if (!eraCards.length) return;
+
+      const section = document.createElement("section");
+      section.className = "mission-era";
+      const heading = document.createElement("h2");
+      heading.textContent = era.label;
+      const grid = document.createElement("div");
+      grid.className = "mission-era-grid";
+      grid.setAttribute("aria-label", `${era.label} missions`);
+      grid.append(...eraCards);
+      section.append(heading, grid);
+      storiesContainer.append(section);
+    });
 
     const stories = document.querySelectorAll(".story");
     const storyListSection = document.querySelector('[aria-label="Space hardware stories"]');
