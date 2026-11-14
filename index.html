@@ -169,6 +169,31 @@
       color: var(--muted);
     }
 
+    .quiz-dialog { width: min(760px, calc(100% - 32px)); }
+    .quiz-heading { padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+    .quiz-kicker { margin: 0 0 6px; color: var(--blue); font-size: .72rem; font-weight: 700; letter-spacing: .14em; }
+    .quiz-heading h2 { margin: 0; }
+    .quiz-welcome, .quiz-results { padding: 26px 0 16px; }
+    .quiz-welcome > p, .quiz-results > p { max-width: 560px; color: var(--muted); }
+    .quiz-primary { padding: 10px 17px; border: 1px solid var(--blue); background: var(--blue); color: #16191e; font: inherit; font-weight: 700; cursor: pointer; }
+    .quiz-primary:hover:not(:disabled), .quiz-primary:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+    .quiz-primary:disabled { opacity: .45; cursor: not-allowed; }
+    .quiz-play { padding: 18px 0 12px; }
+    .quiz-progress-row { display: flex; justify-content: space-between; gap: 14px; color: var(--muted); font-size: .85rem; }
+    .quiz-progress-track { height: 4px; margin: 8px 0 18px; background: var(--line); }
+    .quiz-progress-track span { display: block; width: 20%; height: 100%; background: var(--blue); transition: width 250ms ease; }
+    .quiz-image { display: block; width: 100%; height: clamp(150px, 28vh, 230px); object-fit: cover; background: #101722; }
+    .quiz-question { margin: 17px 0 12px; font-size: 1.2rem; }
+    .quiz-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
+    .quiz-option { min-height: 48px; padding: 9px 11px; border: 1px solid var(--line); color: var(--ink); cursor: pointer; }
+    .quiz-option:has(input:checked) { border-color: var(--blue); background: var(--pale-blue); }
+    .quiz-option input { margin: 0 8px 0 0; accent-color: var(--blue); }
+    .quiz-hint { min-height: 1.5em; margin: 12px 0; color: var(--muted); font-size: .9rem; }
+    .quiz-score { margin: 12px 0 0; color: var(--blue); font-size: clamp(2.5rem, 8vw, 4.2rem); font-weight: 700; line-height: 1; }
+    .quiz-results h3 { margin: 12px 0 5px; font-size: 1.35rem; }
+    .quiz-close { display: block; margin: 8px 0 0 auto; }
+    @media (max-width: 560px) { .quiz-options { grid-template-columns: 1fr; } .quiz-image { height: 160px; } }
+
     .hardware-dialog::backdrop {
       background: rgba(5, 8, 22, 0.78);
     }
@@ -646,19 +671,19 @@
   </dialog>
 
   <dialog class="about-dialog" id="ai-use-dialog" aria-labelledby="ai-use-title">
-    <h2 id="ai-use-title">How Super Intelligence was used</h2>
-    <p>Super Intelligence supported the development of this website in the following ways:</p>
+    <h2 id="ai-use-title">How AI helped</h2>
+    <p>AI helped us work through some of the writing and coding. We reviewed the suggestions and made the final choices ourselves.</p>
     <ul>
-      <li><strong>Website design:</strong> Helped explore and refine the page layout, visual styling, and presentation of the NASA mission stories.</li>
-      <li><strong>Debugging:</strong> Helped review the HTML, CSS, and JavaScript, identify potential issues, and suggest fixes for interactive features and responsive behavior.</li>
-      <li><strong>Human review:</strong> Suggestions were used as development assistance; the project author reviewed the site and its content.</li>
+      <li><strong>Website design:</strong> Helped us plan the page layout and how to present the mission stories.</li>
+      <li><strong>Debugging:</strong> Helped us find and fix problems in the code, including parts that make the site work on different screen sizes.</li>
+      <li><strong>Human review:</strong> We checked and edited the suggestions before they went into the finished site.</li>
     </ul>
     <button class="about-close" id="close-ai-use" type="button">Close</button>
   </dialog>
 
   <dialog class="hardware-dialog" id="hardware-dialog" aria-labelledby="hardware-title">
     <h2 id="hardware-title">Mission hardware guide</h2>
-    <p>Explore the spacecraft, instruments, and engineering that made each mission work.</p>
+    <p>Take a closer look at the spacecraft, instruments, and tools behind each mission.</p>
     <div class="hardware-tabs" id="hardware-tabs" role="tablist" aria-label="Mission hardware"></div>
     <div id="hardware-panels"></div>
     <button class="hardware-close" id="close-hardware" type="button">Close</button>
@@ -666,59 +691,47 @@
 
   <dialog class="about-dialog" id="about-dialog" aria-labelledby="about-title">
     <h2 id="about-title">About this project</h2>
-    <p>This student project highlights spacecraft, landers, telescopes, and experiments that remain in space or on other worlds. The idea is to show that exploration does not end when a mission is declared complete: some machines keep working for years, and even the ones that have gone quiet still have a lasting scientific legacy.</p>
-    <p>From the Moon to Mars, from deep space to Earth orbit, these objects carry on the work of discovery long after their launch. Some are still collecting data, while others continue to influence the next generation of missions by teaching us what is possible, what is fragile, and what still remains to be explored.</p>
-    <p>It is a small, human-scale guide to a much larger story: how NASA and partner missions leave behind traces of engineering, curiosity, and wonder that can still shape our understanding of the solar system decades later.</p>
+    <p>We made this site to tell the stories of spacecraft, rovers, telescopes, and experiments that are still out there. Some are still working; others have gone quiet. Either way, what they found continues to help us understand the places they explored.</p>
+    <p>The stories stretch from the Moon and Mars to the distant edge of the Solar System. Every mission left behind something worth learning from, whether it is new data, a clever design, or a lesson for the next spacecraft.</p>
+    <p>We hope these stories make space exploration feel a little closer—and show how a mission can keep teaching us long after launch day.</p>
     <button class="about-close" id="close-about" type="button">Close</button>
   </dialog>
 
-  <dialog class="about-dialog" id="quiz-dialog" aria-labelledby="quiz-title">
-    <h2 id="quiz-title">Space exploration quiz</h2>
-    <p>Test what you learned about the missions on this page.</p>
-    <form id="quiz-form">
-      <fieldset>
-        <legend>1. Which mission left a laser reflector on the Moon?</legend>
-        <label><input type="radio" name="q1" value="a" required> Apollo 11</label><br>
-        <label><input type="radio" name="q1" value="b"> Viking 1</label><br>
-        <label><input type="radio" name="q1" value="c"> Juno</label>
-      </fieldset>
-      <fieldset>
-        <legend>2. Which rover is exploring Gale Crater?</legend>
-        <label><input type="radio" name="q2" value="a" required> Opportunity</label><br>
-        <label><input type="radio" name="q2" value="b"> Curiosity</label><br>
-        <label><input type="radio" name="q2" value="c"> Perseverance</label>
-      </fieldset>
-      <fieldset>
-        <legend>3. Which spacecraft crossed the heliopause in 2012?</legend>
-        <label><input type="radio" name="q3" value="a" required> Pioneer 10</label><br>
-        <label><input type="radio" name="q3" value="b"> New Horizons</label><br>
-        <label><input type="radio" name="q3" value="c"> Voyager 1</label>
-      </fieldset>
-      <fieldset>
-        <legend>4. Which telescope observes from Earth orbit?</legend>
-        <label><input type="radio" name="q4" value="a" required> Hubble</label><br>
-        <label><input type="radio" name="q4" value="b"> Magellan</label><br>
-        <label><input type="radio" name="q4" value="c"> Cassini</label>
-      </fieldset>
-      <fieldset>
-        <legend>5. Which mission studied Jupiter from orbit?</legend>
-        <label><input type="radio" name="q5" value="a" required> Viking 1</label><br>
-        <label><input type="radio" name="q5" value="b"> Juno</label><br>
-        <label><input type="radio" name="q5" value="c"> Hubble</label>
-      </fieldset>
-      <button class="about-close" type="submit">Check answers</button>
-      <p id="quiz-result" role="status" aria-live="polite"></p>
-    </form>
-    <button class="about-close" id="close-quiz" type="button">Close</button>
+  <dialog class="about-dialog quiz-dialog" id="quiz-dialog" aria-labelledby="quiz-title">
+    <div class="quiz-heading">
+      <p class="quiz-kicker">A QUICK SPACE QUIZ</p>
+      <h2 id="quiz-title">Space exploration quiz</h2>
+    </div>
+    <section class="quiz-welcome" id="quiz-welcome">
+      <p>Ten questions about the missions on this page. See how many you remember.</p>
+      <button class="quiz-primary" id="quiz-start" type="button">Start quiz</button>
+    </section>
+    <section class="quiz-play" id="quiz-play" hidden aria-live="polite">
+      <div class="quiz-progress-row"><span id="quiz-step">Question 1 of 10</span><span id="quiz-score-live">0 correct</span></div>
+      <div class="quiz-progress-track" aria-hidden="true"><span id="quiz-progress"></span></div>
+      <img class="quiz-image" id="quiz-image" src="" alt="">
+      <h3 class="quiz-question" id="quiz-question"></h3>
+      <form id="quiz-form">
+        <div class="quiz-options" id="quiz-options"></div>
+        <p class="quiz-hint" id="quiz-hint" aria-live="polite">Pick an answer to move on.</p>
+        <button class="quiz-primary" id="quiz-next" type="submit" disabled>Next</button>
+      </form>
+    </section>
+    <section class="quiz-results" id="quiz-results" hidden aria-live="polite">
+      <p class="quiz-kicker">QUIZ COMPLETE</p>
+      <div class="quiz-score" id="quiz-score"></div>
+      <h3 id="quiz-result-title">Nice work</h3>
+      <p id="quiz-result-copy"></p>
+      <button class="quiz-primary" id="quiz-restart" type="button">Play again</button>
+    </section>
+    <button class="about-close quiz-close" id="close-quiz" type="button">Close</button>
   </dialog>
 
   <main class="wrap">
     <section class="intro" aria-labelledby="page-title">
       <h1>NASA hardware is still out there.</h1>
       <p>
-        Since the 1960s, NASA machines have explored the Moon, Mars, and beyond.
-        Some finished their missions long ago. Others are still helping us learn.
-        Here are a few of their stories.
+        NASA spacecraft have been exploring the Moon, Mars, and beyond for decades. Some are still at work; others have been quiet for years. Their discoveries are still helping us learn. Here are a few of their stories.
       </p>
     </section>
 
@@ -732,14 +745,14 @@
               <span>1969</span>
             </div>
             <h2>Apollo 11's Moon mirror</h2>
-            <p>A small experiment with a remarkably long afterlife.</p>
+            <p>A small Moon experiment that is still helping scientists today.</p>
             <p>Called a lunar laser ranging retroreflector, the array sends incoming light back toward its source. Because it has no moving parts or power supply, it can remain useful on the lunar surface for decades.</p>
             <div class="mission-chapters">
               <section class="chapter"><h3>Chapter 1: A quiet installation</h3><p>During Apollo 11’s final moonwalk, Buzz Aldrin placed a small panel on the lunar ground. Its 100 corner-cube prisms were designed to send laser light back toward its source. The astronauts would soon leave, but this instrument had no return trip to make: it was built to stay where it was and keep working.</p></section>
               <section class="chapter"><h3>Chapter 2: A signal across space</h3><p>From observatories on Earth, scientists aim short laser pulses at the panel. The beam spreads across the distance, and almost all of its light misses. A few photons make the round trip. By timing their return, researchers measure the Earth–Moon distance with remarkable precision, then repeat the experiment to see how that distance changes.</p></section>
               <section class="chapter"><h3>Chapter 3: Measuring a changing Moon</h3><p>The reflector has no batteries, radio, or moving parts; its prism shapes do the work. Along with other lunar reflectors, it has helped scientists track the Moon’s orbit and test ideas about gravity. A device carried to the surface for a short experiment became part of a record spanning decades—a quiet exchange of light between two worlds.</p></section>
             </div>
-            <div class="status"><strong>Status:</strong> Still useful — no batteries needed.</div>
+            <div class="status"><strong>Status:</strong> Still helping scientists—without batteries or moving parts.</div>
           </div>
         </article>
 
@@ -751,13 +764,13 @@
               <span>1976</span>
             </div>
             <h2>Viking 1 lander</h2>
-            <p>Viking 1 brought a full science laboratory to the Martian surface.</p>
+            <p>Viking 1 gave scientists their first close-up look at Mars from the ground.</p>
             <div class="mission-chapters">
               <section class="chapter"><h3>Chapter 1: Touchdown</h3><p>After a ten-month journey, Viking 1 separated from its orbiter and descended toward Chryse Planitia. On July 20, 1976, it became the first U.S. spacecraft to land successfully on Mars. Its first pictures showed rocks scattered across a dusty plain beneath a hazy sky. For scientists on Earth, that ordinary-looking horizon was extraordinary: Mars had become a place they could study from the ground.</p></section>
               <section class="chapter"><h3>Chapter 2: A laboratory on another world</h3><p>Viking’s cameras watched the landscape while weather sensors measured wind, pressure, and temperature. Its robotic arm reached out, scooped soil, and delivered samples to instruments inside the lander. Three biology experiments searched for signs of living organisms. The results were intriguing, but they did not prove that life was present. Scientists kept debating what the tests meant, and later Mars missions carried new ways to investigate the question.</p></section>
               <section class="chapter"><h3>Chapter 3: The first long look</h3><p>Viking 1 returned pictures and measurements for years, giving later landing teams a real place to compare with views from orbit. It watched the weather change and repeatedly studied the same patch of ground. When contact finally ended in 1982, the lander stayed on the plain. Its radio went quiet, but its maps, experiments, and lessons continued to shape how engineers planned the next visits to Mars.</p></section>
             </div>
-            <div class="status"><strong>Status:</strong> Mission complete; the lander remains on Mars.</div>
+            <div class="status"><strong>Status:</strong> Quiet now, but still on the Martian plain.</div>
           </div>
         </article>
 
@@ -769,7 +782,7 @@
               <span>2012</span>
             </div>
             <h2>Curiosity rover</h2>
-            <p>A car-sized rover investigating whether ancient Mars could have supported microbial life.</p>
+            <p>Curiosity is climbing an ancient Martian mountain, studying the rocks one stop at a time.</p>
             <p>Curiosity landed inside Gale Crater in August 2012. Its route across the crater floor and up Mount Sharp lets scientists examine layers of rock formed in different ancient environments.</p>
             <div class="mission-chapters">
               <section class="chapter"><h3>Chapter 1: A landing inside an ancient crater</h3><p>In August 2012, Curiosity landed in Gale Crater using a rocket-powered sky crane. Cables lowered the rover onto the ground; once its wheels touched, the crane cut loose and flew away. Ahead stood Mount Sharp, a stack of rock layers built over a long span of Martian history. Curiosity’s route up the mountain would let scientists read those layers one stop at a time.</p></section>
@@ -777,7 +790,7 @@
               <section class="chapter"><h3>Chapter 3: Following the water</h3><p>The rocks show that Gale Crater once held lakes and streams. Curiosity has found chemicals and environments that could have supported microbial life billions of years ago, but it has not found proof that life existed. The rover is not searching for living organisms today. It is piecing together the old conditions: what the water was like, how long it lasted, and how the landscape changed when it disappeared.</p></section>
               <section class="chapter"><h3>Chapter 4: The climb continues</h3><p>Curiosity is still climbing Mount Sharp and sending home its findings. A wheel track marks its route; a drilled hole lets the team compare one layer of rock with another. The mountain is too large to understand from a single view, so the rover works like a field geologist with a very long commute. Every careful stop adds another part to the story of a Mars that was once wetter and more varied.</p></section>
             </div>
-            <div class="status"><strong>Status:</strong> Active — still exploring and sending home science.</div>
+            <div class="status"><strong>Status:</strong> Still exploring and sending pictures and measurements back to Earth.</div>
           </div>
         </article>
 
@@ -789,7 +802,7 @@
               <span>1977</span>
             </div>
             <h2>Voyager 1</h2>
-            <p>Launched in 1977, Voyager 1 turned a planetary tour into a journey beyond the Sun's bubble.</p>
+            <p>Voyager 1 began with a tour of the planets and kept traveling into interstellar space.</p>
             <p>After its Saturn encounter, the spacecraft continued outward on a path that took it across the heliopause in 2012. Its great distance means radio messages take many hours to travel between Voyager and Earth.</p>
             <div class="mission-chapters">
               <section class="chapter"><h3>Chapter 1: The outer planets</h3><p>Voyager 1 launched in 1977 and passed Jupiter in 1979, then Saturn in 1980. Its cameras sent home close views of striped clouds, rings, and moons that had been no more than faint dots from Earth. At Jupiter, it saw volcanoes erupting on Io. The Saturn encounter bent its path northward, away from the planets. The flybys were brief; the discoveries gave scientists years of new questions to work on.</p></section>
@@ -797,7 +810,7 @@
               <section class="chapter"><h3>Chapter 3: A distant conversation</h3><p>The radio signal now takes nearly a day to travel one way between Voyager 1 and Earth. Engineers send a command and wait hours for it to arrive; a reply takes hours more. The spacecraft’s power supply is slowly fading, so the team switches off equipment in a planned order. A few instruments still send readings about the space around the probe, a thin conversation from farther away than any other spacecraft has traveled.</p></section>
               <section class="chapter"><h3>Chapter 4: A greeting carried forward</h3><p>A Golden Record rides aboard Voyager 1, carrying greetings, music, and sounds chosen to represent life on Earth. The spacecraft is not headed toward a known destination; it continues along its path through the galaxy. The record may never be found, but it carries a small portrait of the world that launched it. Voyager’s cameras have gone dark, yet its remaining instruments continue to report what lies beyond the Sun’s reach.</p></section>
             </div>
-            <div class="status"><strong>Status:</strong> Still traveling; some instruments continue to send data.</div>
+            <div class="status"><strong>Status:</strong> Still traveling, with a few instruments reporting back from deep space.</div>
           </div>
         </article>
 
@@ -809,13 +822,13 @@
               <span>1990</span>
             </div>
             <h2>Hubble Space Telescope</h2>
-            <p>Above Earth's atmosphere, Hubble captures sharp views across a wide range of light.</p>
+            <p>From above Earth’s atmosphere, Hubble gets a clearer view of stars and galaxies.</p>
             <div class="mission-chapters">
               <section class="chapter"><h3>Chapter 1: Above the blur</h3><p>Hubble launched aboard the space shuttle Discovery in 1990. Above Earth’s atmosphere, it could observe light that the air absorbs or blurs. But the first images showed stars with fuzzy halos instead of sharp points. A tiny flaw in the shape of the main mirror had thrown the focus off. The telescope was working in orbit, but its view was not yet the one scientists had planned for.</p></section>
               <section class="chapter"><h3>Chapter 2: A changing universe</h3><p>In 1993, astronauts flew to Hubble and installed corrective optics and a new camera. The next images showed that the repair worked. Shuttle crews returned several more times, replacing instruments, gyroscopes, and other equipment. Each visit took careful work in bulky suits around a telescope moving above Earth at thousands of kilometers per hour. Hubble became an observatory that people could repair and improve while it was already in space.</p></section>
               <section class="chapter"><h3>Chapter 3: Looking back in time</h3><p>Hubble has photographed planets, star-forming clouds, and galaxies whose light began its journey billions of years ago. It does not look into the past by magic; the light simply takes time to reach us. The telescope is still working today. Its story includes brilliant images, but also a practical lesson: a problem was found, a repair was designed, and a mission that began with a blurry view went on to change astronomy.</p></section>
             </div>
-            <div class="status"><strong>Status:</strong> Active — still observing the universe from orbit.</div>
+            <div class="status"><strong>Status:</strong> Still observing the universe from Earth orbit.</div>
           </div>
         </article>
 
@@ -827,7 +840,7 @@
               <span>2009</span>
             </div>
             <h2>Lunar Reconnaissance Orbiter</h2>
-            <p>LRO is building a detailed picture of the Moon to support science and future exploration.</p>
+            <p>LRO has spent years mapping the Moon and spotting places future explorers may want to visit.</p>
             <div class="mission-chapters">
               <section class="chapter"><h3>Chapter 1: A new map of the Moon</h3><p>The Lunar Reconnaissance Orbiter arrived at the Moon in 2009 and began circling it with cameras and measuring instruments. It photographs the ground in strips, returning to the same places from different angles. Over time, those passes form a detailed map. LRO has photographed Apollo landing sites and rugged regions that crews have never visited, turning a changing view from orbit into a record scientists can compare.</p></section>
               <section class="chapter"><h3>Chapter 2: Searching the shadows</h3><p>Near the lunar poles, some deep craters stay in shadow for long stretches and become extremely cold. LRO measures their temperatures and searches for signs of water ice and other materials. A camera cannot see everything in a dark crater, so scientists combine pictures with measurements from other instruments. The shadows are difficult places to study, but they may hold clues about what is available on the Moon and what future explorers would face.</p></section>
@@ -845,7 +858,7 @@
               <span>1972</span>
             </div>
             <h2>Pioneer 10</h2>
-            <p>Pioneer 10 opened the way for later missions to the outer Solar System.</p>
+            <p>Pioneer 10 was the first spacecraft to travel through the asteroid belt and visit Jupiter.</p>
             <div class="mission-chapters">
               <section class="chapter"><h3>Chapter 1: A first crossing</h3><p>Pioneer 10 left Earth in March 1972, headed for Jupiter and a region no spacecraft had crossed before. Engineers worried that dust or small rocks in the asteroid belt might damage the probe, but it passed through safely. In December 1973, Pioneer reached Jupiter. Before it arrived, no one knew exactly how harsh the planet’s radiation belts would be for a spacecraft flying nearby.</p></section>
               <section class="chapter"><h3>Chapter 2: Meeting Jupiter</h3><p>Pioneer swept past the giant planet, taking the first close images while its instruments measured magnetic fields, radiation, and particles. The brief encounter gave scientists a much better picture of Jupiter and helped engineers prepare later spacecraft for the environment they would face. Then the planet’s gravity bent Pioneer’s path outward. It had finished its main job, but the probe did not stop at Jupiter or turn back toward Earth.</p></section>
@@ -863,7 +876,7 @@
               <span>1977</span>
             </div>
             <h2>Voyager 2</h2>
-            <p>Continuing its grand tour of the outer planets, sending back data from the edge of the heliosphere.</p>
+            <p>Voyager 2 is the only spacecraft to have visited Uranus and Neptune—and it is still traveling outward.</p>
             <p>Voyager 2 followed a path that took it past Jupiter, Saturn, Uranus, and Neptune, giving humanity its first close-up views of the giant outer worlds and the space between them.</p>
             <div class="mission-chapters">
               <section class="chapter"><h3>Chapter 1: A grand tour</h3><p>Voyager 2 launched in August 1977, before Voyager 1, and followed a route shaped by the gravity of the giant planets. It passed Jupiter and Saturn, then continued toward Uranus and Neptune. Each flyby lasted only a short time, so the team planned which pictures and measurements mattered most before the spacecraft arrived. Voyager 2 gave people their first close views of worlds that had been distant points of light.</p></section>
@@ -882,13 +895,13 @@
               <span>2021</span>
             </div>
             <h2>Perseverance rover</h2>
-            <p>The rover searching for ancient biosignatures and collecting samples for the future.</p>
+            <p>Perseverance is exploring an ancient lake bed and saving rock samples for a closer look someday.</p>
             <div class="mission-chapters">
               <section class="chapter"><h3>Chapter 1: Jezero Crater</h3><p>Perseverance touched down in Jezero Crater in February 2021. From orbit, scientists had spotted a fan-shaped delta where a river may once have emptied into a lake. On the ground, the rover could study the layers directly. Places like this can preserve clues about ancient environments, so Perseverance is looking for signs that Mars may once have been habitable—not for living organisms today.</p></section>
               <section class="chapter"><h3>Chapter 2: A powered field lab</h3><p>Perseverance works like a mobile field lab. Cameras help the team choose a rock; a drill on the robotic arm cuts a small core from inside it. The rover seals samples in clean tubes and records exactly where each one came from. It also tests equipment for future exploration. Every drive, photograph, and sample location adds context, so the rock can be understood as part of a landscape rather than an isolated object.</p></section>
               <section class="chapter"><h3>Chapter 3: Sample return prep</h3><p>Some sample tubes have been placed on the Martian ground as a backup cache, while others remain stored inside the rover. They are being kept for possible collection by a future mission; exactly how they might reach Earth is still being worked out. If returned, the samples could be studied in laboratories with tools too large to send to Mars. For now, Perseverance is gathering the evidence and keeping careful track of its route.</p></section>
             </div>
-            <div class="status"><strong>Status:</strong> Active — still exploring and collecting scientifically valuable samples.</div>
+            <div class="status"><strong>Status:</strong> Still exploring Mars and collecting samples.</div>
           </div>
         </article>
 
@@ -900,13 +913,13 @@
               <span>1997</span>
             </div>
             <h2>Cassini</h2>
-            <p>One of the most revealing investigations of the ringed planet and its moons.</p>
+            <p>Cassini spent 13 years at Saturn, exploring the planet, its rings, and its moons.</p>
             <div class="mission-chapters">
               <section class="chapter"><h3>Chapter 1: Arrival</h3><p>Cassini reached Saturn in 2004 after a seven-year trip, becoming the first spacecraft to orbit the planet. It carried Europe’s Huygens probe, which separated from Cassini and descended through Titan’s thick haze in 2005. Huygens sent pictures and measurements from the surface before its batteries ran down. For the first time, scientists could study the ground of a moon in the outer Solar System from a probe that had landed there.</p></section>
               <section class="chapter"><h3>Chapter 2: Ring and moon science</h3><p>Cassini circled Saturn for thirteen years, passing the rings and returning to the same moons from new angles. At Enceladus, it flew through water-rich plumes spraying from cracks near the south pole. At Titan, radar revealed lakes and seas of liquid methane and ethane beneath the haze. These moons became destinations in their own right, with weather, geology, and new questions about what makes a world active.</p></section>
               <section class="chapter"><h3>Chapter 3: End of mission</h3><p>By 2017, Cassini was running low on fuel. Mission controllers sent it through a final series of dives between Saturn and its rings, then guided it into the planet’s atmosphere. The planned end helped protect moons such as Enceladus from accidental contamination. Cassini stopped transmitting, but the archive it left behind is still being studied. Its last plunge was a careful choice by a team trying to protect the very places the spacecraft had made more interesting.</p></section>
             </div>
-            <div class="status"><strong>Status:</strong> Mission complete; its legacy continues in the data it returned.</div>
+            <div class="status"><strong>Status:</strong> Its mission is over, but scientists are still studying its data.</div>
           </div>
         </article>
 
@@ -918,13 +931,13 @@
               <span>1989</span>
             </div>
             <h2>Magellan</h2>
-            <p>Venus’s cloud-shrouded surface was mapped in extraordinary detail by radar.</p>
+            <p>Magellan used radar to map the surface hidden beneath Venus’s thick clouds.</p>
             <div class="mission-chapters">
               <section class="chapter"><h3>Chapter 1: Radar from orbit</h3><p>When Magellan reached Venus in 1990, thick clouds hid the ground from ordinary cameras. The spacecraft used radar instead: it sent radio pulses toward the surface and measured the echoes that came back. Each pass added another strip to the map. By combining them, scientists could see the shape and texture of the planet beneath the clouds for the first time in such detail.</p></section>
               <section class="chapter"><h3>Chapter 2: A world of volcanoes</h3><p>The map showed broad plains, ridges, impact craters, and many volcanic features across nearly the whole planet. Venus was no longer a bright disk hidden behind clouds; it had a landscape scientists could compare and study. Radar could not answer every question about how the features formed, but it revealed where to look and gave researchers a way to understand a world whose surface sunlight could not show.</p></section>
               <section class="chapter"><h3>Chapter 3: A long afterlife</h3><p>After years of mapping, controllers lowered Magellan’s orbit until it entered Venus’s atmosphere in October 1994. The spacecraft broke apart, but its radar maps remained. Researchers still compare those records with later observations to study the planet. Magellan’s mission ended in the clouds it had spent years looking through; its most lasting contribution was the detailed picture it sent home before it disappeared.</p></section>
             </div>
-            <div class="status"><strong>Status:</strong> Mission complete; its radar maps are still used by scientists.</div>
+            <div class="status"><strong>Status:</strong> Its radar maps are still helping scientists study Venus.</div>
           </div>
         </article>
 
@@ -936,13 +949,13 @@
               <span>1971</span>
             </div>
             <h2>Apollo 15 lunar rover</h2>
-            <p>A fold-out mobility system that made the lunar surface feel much larger.</p>
+            <p>Apollo 15’s Moon rover let astronauts travel farther from their landing site.</p>
             <div class="mission-chapters">
               <section class="chapter"><h3>Chapter 1: The first long-distance drive</h3><p>The Lunar Roving Vehicle traveled to the Moon folded against Apollo 15’s Lunar Module. Once outside, David Scott and James Irwin unfolded the frame, checked the wheels and controls, and climbed into their seats. The small electric rover let them travel much farther from the landing site than a spacesuit walk could manage. A ridge that had looked distant from the lander was suddenly reachable—and the crew could still bring its samples back.</p></section>
               <section class="chapter"><h3>Chapter 2: Science on wheels</h3><p>Four wire-mesh wheels, each with its own electric motor, carried the astronauts across the uneven ground. A hand controller steered the rover, and a navigation display helped them track direction and distance. Scott and Irwin drove to selected stops, photographed the terrain, and collected rocks. The rover did not choose what mattered; it gave the astronauts more room to look, compare, and decide where the next piece of the Moon’s story might be.</p></section>
               <section class="chapter"><h3>Chapter 3: A lasting footprint</h3><p>Across three excursions, Apollo 15’s crew traveled nearly 28 kilometers. Apollo 16 and Apollo 17 carried the other two lunar rovers. At the end of each mission, the crews left the vehicles behind and climbed back into their Lunar Modules. Their tracks remain beside them, marking the routes people drove on another world. The rover extended the astronauts’ reach, then became part of the landscape it had helped them explore.</p></section>
             </div>
-            <div class="status"><strong>Status:</strong> Mission complete; the rover remains on the Moon.</div>
+            <div class="status"><strong>Status:</strong> Still parked where the Apollo 15 crew left it.</div>
           </div>
         </article>
 
@@ -954,13 +967,13 @@
               <span>2004</span>
             </div>
             <h2>Opportunity rover</h2>
-            <p>A small robot that outlived its expected mission by years and changed how we think about Mars.</p>
+            <p>Opportunity was built for 90 Martian days. It kept working for more than 14 years.</p>
             <div class="mission-chapters">
               <section class="chapter"><h3>Chapter 1: A long journey to an ancient plain</h3><p>Opportunity landed on Meridiani Planum in January 2004. Its planned mission was about 90 Martian days, or sols. Soon after landing, the rover found rocks with minerals and textures that form in the presence of water. A small robot built for a short survey had found a reason to keep moving. The team began choosing the next nearby target, then the next, turning a brief visit into a long field investigation.</p></section>
               <section class="chapter"><h3>Chapter 2: The science kept moving</h3><p>Opportunity drove from one outcrop to another, taking pictures before brushing or grinding a thin patch from a rock. Instruments examined what lay beneath the dusty surface. The rover found strong evidence that liquid water had once altered Martian rocks. It could not tell scientists whether life had existed, but it helped show that some ancient places on Mars had once been wet. Each stop added another point to a route more than 45 kilometers long.</p></section>
               <section class="chapter"><h3>Chapter 3: A silent end</h3><p>Opportunity worked for more than fourteen years—far beyond its planned 90 sols. In 2018, a planet-wide dust storm blocked sunlight from its solar panels and the rover stopped responding. NASA sent commands for months, but no reply came; the mission was declared complete in 2019. Opportunity remains at its last location. Its story ends with a quiet radio, but the images and measurements it sent home are still part of how scientists understand Mars.</p></section>
             </div>
-            <div class="status"><strong>Status:</strong> Mission complete; the rover remains silent on Mars.</div>
+            <div class="status"><strong>Status:</strong> Opportunity is quiet on Mars, but its discoveries live on in the data it sent home.</div>
           </div>
         </article>
 
@@ -972,13 +985,13 @@
               <span>2006</span>
             </div>
             <h2>New Horizons</h2>
-            <p>A compact mission that transformed a distant world from a blurry point into a real place.</p>
+            <p>New Horizons gave us our first close look at Pluto—and then kept going.</p>
             <div class="mission-chapters">
               <section class="chapter"><h3>Chapter 1: A route to Pluto</h3><p>New Horizons launched in 2006 and spent years crossing the outer Solar System. In July 2015, it swept past Pluto at high speed. It could not slow down to orbit, so every observation had to fit into a short window as the spacecraft rushed by. Cameras and instruments turned toward Pluto and its moons, gathering images and readings that would take hours to travel back across the radio link to Earth.</p></section>
               <section class="chapter"><h3>Chapter 2: Looking past the familiar</h3><p>The pictures turned Pluto from a blurry point into a landscape of mountains made of water ice, broad frozen plains, and a thin atmosphere. Some areas looked surprisingly smooth and young, hinting that Pluto’s surface had changed more recently than expected. The team received the data slowly, piece by piece, then assembled them into maps. A distant world that had seemed small and simple became a place with its own weather and geology.</p></section>
               <section class="chapter"><h3>Chapter 3: A path into the Kuiper Belt</h3><p>After Pluto, New Horizons continued into the Kuiper Belt and flew past Arrokoth in 2019. The small object looked like two rounded pieces joined together, preserving clues about how early building blocks of the Solar System came together. New Horizons kept traveling after the encounter, studying its surroundings. Pluto had been the reason for the mission, but the spacecraft’s path carried the exploration farther than its original destination.</p></section>
             </div>
-            <div class="status"><strong>Status:</strong> Active — still flying farther into the outer Solar System.</div>
+            <div class="status"><strong>Status:</strong> Still heading farther into the outer Solar System.</div>
           </div>
         </article>
 
@@ -990,13 +1003,13 @@
               <span>2011</span>
             </div>
             <h2>Juno</h2>
-            <p>An orbiting laboratory working close to Jupiter to reveal the giant planet's inner structure.</p>
+            <p>Juno dives close to Jupiter to study what lies beneath its swirling clouds.</p>
             <div class="mission-chapters">
               <section class="chapter"><h3>Chapter 1: A dangerous orbit</h3><p>Juno reached Jupiter in 2016 after a five-year journey. It follows a long, looping orbit over the planet’s poles, briefly passing close to the cloud tops before swinging far away again. The route limits how long the spacecraft spends inside Jupiter’s intense radiation belts. Far from the Sun, its large solar panels collect the light needed to power the instruments—an engineering choice that makes the mission’s location possible.</p></section>
               <section class="chapter"><h3>Chapter 2: Measuring the giant</h3><p>On each close pass, Juno measures Jupiter’s gravity and magnetic field and studies signals changed by the atmosphere. Those readings help scientists estimate how deep the famous cloud bands reach and what the planet may look like below them. The camera sends home views of storms and cloud patterns, while other instruments gather less visible measurements. The team pieces the results together pass by pass, like building a map from brief visits.</p></section>
               <section class="chapter"><h3>Chapter 3: A persistent observer</h3><p>Juno has also flown close to large moons such as Ganymede, Europa, and Io. Each encounter turns a small point beside Jupiter into a world with its own surface and questions. The spacecraft continues returning science from its orbit. Its pictures bring the giant planet’s storms close, while its measurements help researchers investigate what lies under the clouds and how Jupiter and its moons formed.</p></section>
             </div>
-            <div class="status"><strong>Status:</strong> Active — still orbiting Jupiter and returning science.</div>
+            <div class="status"><strong>Status:</strong> Still orbiting Jupiter and sending back data.</div>
           </div>
         </article>
       </div>
@@ -1016,12 +1029,12 @@
   <footer>
     <div class="wrap">
       <section aria-labelledby="team-title">
-        <h2 id="team-title">Meet Fantastic-2</h2>
-        <p>Fantastic-2 is the team behind this website. Atharva Rao and Adhita Bhawat coded the site; Adhita also wrote the creative content, while Atharva led the ideation and designing of the website.</p>
-        <p>Through this project, we learned how to turn ideas into an engaging website, work together by sharing different responsibilities, and explore the lasting impact of space missions and their hardware.</p>
+        <h2 id="team-title">We’re Team Fantastic-2</h2>
+        <p>Fantastic-2 is the team behind this website. Aditha Bhagwat and Atharva Rao built the site. Aditha wrote the stories, and Atharva came up with the idea and helped shape the design.</p>
+        <p>We learned how to turn an idea into a working website, split up the work, and share what we discovered about these missions.</p>
       </section>
       <div class="footer-content">
-        <span>A student project for NASA Space App Challenge</span>
+        <span>A student project for the NASA Space Apps Challenge</span>
       </div>
     </div>
   </footer>
@@ -1109,15 +1122,93 @@
 
     const quizDialog = document.querySelector("#quiz-dialog");
     const quizForm = document.querySelector("#quiz-form");
-    document.querySelector("#open-quiz").addEventListener("click", () => quizDialog.showModal());
+    const quizWelcome = document.querySelector("#quiz-welcome");
+    const quizPlay = document.querySelector("#quiz-play");
+    const quizResults = document.querySelector("#quiz-results");
+    const quizQuestions = [
+      { question: "Which mission left a laser reflector on the Moon?", answer: "Apollo 11", options: ["Apollo 11", "Viking 1", "Juno"], image: "A Man on the Moon, AS11-40-5903", src: "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/A_Man_on_the_Moon%2C_AS11-40-5903_%28cropped%29.jpg/960px-A_Man_on_the_Moon%2C_AS11-40-5903_%28cropped%29.jpg" },
+      { question: "Which rover is exploring Gale Crater?", answer: "Curiosity", options: ["Opportunity", "Curiosity", "Perseverance"], image: "NASA's Curiosity rover on Mars", src: "https://images-assets.nasa.gov/image/PIA19808/PIA19808~orig.jpg" },
+      { question: "Which spacecraft crossed the heliopause in 2012?", answer: "Voyager 1", options: ["Pioneer 10", "New Horizons", "Voyager 1"], image: "Voyager 1's view of Earth from deep space", src: "https://images-assets.nasa.gov/image/PIA17046/PIA17046~orig.jpg" },
+      { question: "Which telescope observes from Earth orbit?", answer: "Hubble", options: ["Hubble", "Magellan", "Cassini"], image: "Hubble Space Telescope", src: "https://images-assets.nasa.gov/image/PIA15986/PIA15986~orig.jpg" },
+      { question: "Which mission studied Jupiter from orbit?", answer: "Juno", options: ["Viking 1", "Juno", "Hubble"], image: "Juno's view of Jupiter", src: "https://images-assets.nasa.gov/image/PIA21973/PIA21973~orig.jpg" },
+      { question: "Which rover is exploring Jezero Crater and caching rock samples?", answer: "Perseverance", options: ["Curiosity", "Perseverance", "Opportunity"], image: "Perseverance rover on Mars", src: "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/Perseverance-Selfie-at-Rochette-Horizontal-V2.gif/960px-Perseverance-Selfie-at-Rochette-Horizontal-V2.gif" },
+      { question: "Which mission carried astronauts and a rover across the Moon?", answer: "Apollo 15", options: ["Apollo 11", "Apollo 15", "Viking 1"], image: "Apollo 15 lunar rover", src: "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ed/Apollo15LunarRover.jpg/960px-Apollo15LunarRover.jpg" },
+      { question: "Which spacecraft used radar to map Venus through its clouds?", answer: "Magellan", options: ["Magellan", "Cassini", "Hubble"], image: "Magellan spacecraft", src: "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/Magellan_at_Kennedy_Space_Center.jpg/960px-Magellan_at_Kennedy_Space_Center.jpg" },
+      { question: "Which rover kept exploring Mars long after its original 90-sol plan?", answer: "Opportunity", options: ["Viking 1", "Opportunity", "Perseverance"], image: "Mars rover", src: "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d8/NASA_Mars_Rover.jpg/960px-NASA_Mars_Rover.jpg" },
+      { question: "Which spacecraft flew past Pluto in 2015?", answer: "New Horizons", options: ["Voyager 2", "Pioneer 10", "New Horizons"], image: "New Horizons spacecraft model", src: "https://upload.wikimedia.org/wikipedia/commons/e/ee/New_Horizons_spacecraft_model_1.png" }
+    ];
+    let quizIndex = 0;
+    let quizScore = 0;
+
+    function renderQuizQuestion() {
+      const item = quizQuestions[quizIndex];
+      document.querySelector("#quiz-step").textContent = `Question ${quizIndex + 1} of ${quizQuestions.length}`;
+      document.querySelector("#quiz-score-live").textContent = `${quizScore} right so far`;
+      document.querySelector("#quiz-progress").style.width = `${((quizIndex + 1) / quizQuestions.length) * 100}%`;
+      const image = document.querySelector("#quiz-image");
+      image.src = item.src;
+      image.alt = item.image;
+      document.querySelector("#quiz-question").textContent = item.question;
+      const options = document.querySelector("#quiz-options");
+      options.replaceChildren();
+      item.options.forEach((option) => {
+        const label = document.createElement("label");
+        label.className = "quiz-option";
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = "quiz-answer";
+        radio.value = option;
+        radio.required = true;
+        radio.addEventListener("change", () => {
+          document.querySelector("#quiz-next").disabled = false;
+          document.querySelector("#quiz-hint").textContent = "Got it. Ready for the next question?";
+        });
+        label.append(radio, document.createTextNode(option));
+        options.append(label);
+      });
+      document.querySelector("#quiz-next").disabled = true;
+      document.querySelector("#quiz-next").textContent = quizIndex === quizQuestions.length - 1 ? "See my score" : "Next";
+      document.querySelector("#quiz-hint").textContent = "Pick an answer to move on.";
+    }
+
+    function resetQuiz() {
+      quizIndex = 0;
+      quizScore = 0;
+      quizWelcome.hidden = false;
+      quizPlay.hidden = true;
+      quizResults.hidden = true;
+      quizForm.reset();
+    }
+
+    document.querySelector("#open-quiz").addEventListener("click", () => { resetQuiz(); quizDialog.showModal(); });
     document.querySelector("#close-quiz").addEventListener("click", () => quizDialog.close());
+    document.querySelector("#quiz-start").addEventListener("click", () => {
+      quizWelcome.hidden = true;
+      quizPlay.hidden = false;
+      renderQuizQuestion();
+    });
+    document.querySelector("#quiz-restart").addEventListener("click", () => {
+      resetQuiz();
+      quizWelcome.hidden = true;
+      quizPlay.hidden = false;
+      renderQuizQuestion();
+    });
     quizForm.addEventListener("submit", (event) => {
       event.preventDefault();
-      const answers = ["a", "b", "c", "a", "b"];
-      const score = answers.reduce((total, answer, index) => {
-        return total + (quizForm.elements[`q${index + 1}`].value === answer ? 1 : 0);
-      }, 0);
-      document.querySelector("#quiz-result").textContent = `You scored ${score} out of 5.`;
+      const selected = quizForm.querySelector('input[name="quiz-answer"]:checked');
+      if (!selected) return;
+      if (selected.value === quizQuestions[quizIndex].answer) quizScore += 1;
+      if (quizIndex < quizQuestions.length - 1) {
+        quizIndex += 1;
+        renderQuizQuestion();
+        return;
+      }
+      const percentage = Math.round((quizScore / quizQuestions.length) * 100);
+      quizPlay.hidden = true;
+      quizResults.hidden = false;
+      document.querySelector("#quiz-score").textContent = `${percentage}%`;
+      document.querySelector("#quiz-result-title").textContent = quizScore === quizQuestions.length ? "Full marks!" : quizScore >= 3 ? "Nice work!" : "Keep exploring!";
+      document.querySelector("#quiz-result-copy").textContent = `You got ${quizScore} out of ${quizQuestions.length} right — that’s ${percentage}% correct.`;
     });
 
     const storiesContainer = document.querySelector("#stories");
@@ -1175,8 +1266,8 @@
       const readMore = document.createElement("button");
       readMore.className = "read-more";
       readMore.type = "button";
-      readMore.textContent = "Read more";
-      readMore.setAttribute("aria-label", `Read more about ${story.querySelector("h2").textContent}`);
+      readMore.textContent = "Read the story";
+      readMore.setAttribute("aria-label", `Read the story about ${story.querySelector("h2").textContent}`);
       story.querySelector(".story-content").append(readMore);
 
       const openStory = () => {
