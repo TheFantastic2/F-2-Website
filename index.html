@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050816">
+  <title>NASA Hardware: Still Out There</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&display=swap');
+
+    :root {
+      color-scheme: dark;
+      --ink: #e7e1d7;
+      --muted: #b8afa2;
+      --blue: #d3b48b;
+      --pale-blue: #38332c;
+      --line: #51493e;
+      --paper: #292722;
+      --page: #1d1c19;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--ink);
+      line-height: 1.6;
+      transition: background 500ms ease, color 300ms ease;
+    }
+
+    body.space-background {
+      background-color: #050816;
+      background-image:
+        radial-gradient(1px 1px at 12% 18%, #fff 99%, transparent),
+        radial-gradient(1px 1px at 78% 32%, #dbeafe 99%, transparent),
+        radial-gradient(2px 2px at 43% 72%, #fff 99%, transparent),
+        radial-gradient(1px 1px at 91% 84%, #c4b5fd 99%, transparent),
+        radial-gradient(ellipse at 50% 120%, #172554 0, #090d20 55%, #050816 100%);
+      background-attachment: fixed;
+      color: #f0f3ff;
+    }
+
+    body.space-background .intro p:last-child,
+    body.space-background footer {
+      color: #c5cbe0;
+    }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slide-in {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .wrap {
+      width: min(100% - 32px, 1200px);
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--line);
+      background: var(--paper);
+      animation: slide-in 500ms ease-out both;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .sources-button,
+    .sources-close,
+    .hardware-button,
+    .hardware-close,
+    .about-button,
+    .about-close {
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      background: var(--page);
+      color: var(--blue);
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .sources-button:hover,
+    .sources-button:focus-visible,
+    .sources-close:hover,
+    .sources-close:focus-visible,
+    .hardware-button:hover,
+    .hardware-button:focus-visible,
+    .hardware-close:hover,
+    .hardware-close:focus-visible,
+    .about-button:hover,
+    .about-button:focus-visible,
+    .about-close:hover,
+    .about-close:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: 2px;
+    }
+
+    .sources-dialog {
+      width: min(620px, calc(100% - 32px));
+      max-height: 80vh;
+      padding: 24px;
+      overflow-y: auto;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .sources-dialog::backdrop {
+      background: rgba(5, 8, 22, 0.78);
+    }
+
+    .sources-dialog h2 {
+      margin: 0 0 8px;
+    }
+
+    .sources-dialog p {
+      color: var(--muted);
+    }
+
+    .header-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .hardware-dialog {
+      width: min(760px, calc(100% - 32px));
+      max-height: 85vh;
+      padding: 24px;
+      overflow-y: auto;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .about-dialog {
+      width: min(620px, calc(100% - 32px));
+      max-height: 80vh;
+      padding: 24px;
+      overflow-y: auto;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .about-dialog::backdrop {
+      background: rgba(5, 8, 22, 0.78);
+    }
+
+    .about-dialog h2 {
+      margin: 0 0 8px;
+    }
+
+    .about-dialog p {
+      color: var(--muted);
+    }
+
+    .hardware-dialog::backdrop {
+      background: rgba(5, 8, 22, 0.78);
+    }
+
+    .hardware-dialog h2 {
+      margin: 0 0 8px;
+    }
+
+    .hardware-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 18px 0;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hardware-tab {
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      background: var(--page);
+      color: var(--ink);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .hardware-tab[aria-selected="true"] {
+      border-color: var(--blue);
+      background: var(--pale-blue);
+      color: var(--blue);
+    }
+
+    .hardware-tab:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: 2px;
+    }
+
+    .hardware-panel p {
+      color: var(--muted);
+    }
+
+    .hardware-panel p:last-child {
+      margin-bottom: 20px;
+    }
+
+    .sources-list {
+      display: grid;
+      gap: 10px;
+      margin: 18px 0;
+      padding-left: 22px;
+    }
+
+    .sources-list a {
+      color: var(--blue);
+    }
+
+    .brand {
+      color: var(--blue);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    main {
+      padding: 44px 0 56px;
+    }
+
+    .intro {
+      max-width: 700px;
+      margin-bottom: 28px;
+      animation: fade-up 650ms ease-out both;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--blue);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 620px;
+      margin: 0;
+      font-size: clamp(2.2rem, 6vw, 3.5rem);
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+    }
+
+    .intro p:last-child {
+      max-width: 640px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 1.1rem;
+    }
+
+    .stories {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .story {
+      display: flex;
+      flex-direction: column;
+      min-height: 300px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 0;
+      background: var(--paper);
+      box-shadow: 0 8px 24px rgba(75, 74, 70, 0.07);
+      opacity: 0;
+      transform: translateY(18px);
+      transition: transform 280ms ease, box-shadow 280ms ease, opacity 350ms ease, border-color 220ms ease;
+      transition-delay: 0ms;
+      cursor: pointer;
+    }
+
+    .story:nth-child(2) { transition-delay: 80ms; }
+    .story:nth-child(3) { transition-delay: 160ms; }
+    .story:nth-child(4) { transition-delay: 240ms; }
+    .story:nth-child(5) { transition-delay: 320ms; }
+    .story:nth-child(6) { transition-delay: 400ms; }
+    .story:nth-child(7) { transition-delay: 480ms; }
+    .story:nth-child(8) { transition-delay: 560ms; }
+    .story:nth-child(9) { transition-delay: 640ms; }
+    .story:nth-child(10) { transition-delay: 720ms; }
+
+    .story:focus-visible {
+      outline: 3px solid var(--blue);
+      outline-offset: 3px;
+    }
+
+    .story.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .story:hover {
+      transform: translateY(-4px);
+      border-color: #b6a58c;
+      box-shadow: 0 14px 32px rgba(75, 74, 70, 0.13);
+      transition-delay: 0ms;
+    }
+
+    .mission-image {
+      display: block;
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      background: #dce8f2;
+      transition: transform 220ms ease;
+    }
+
+    .story:hover .mission-image {
+      transform: scale(1.03);
+    }
+
+    .story-content {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      padding: 16px 16px 18px;
+    }
+
+    .story[hidden] {
+      display: none;
+    }
+
+    .story-topline {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .location {
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    h2 {
+      margin: 0 0 8px;
+      font-size: 1.3rem;
+      line-height: 1.3;
+    }
+
+    .story p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .story-content > p:nth-of-type(n + 2),
+    .story-content .mission-chapters,
+    .story-content .status {
+      display: none;
+    }
+
+    .read-more {
+      align-self: flex-start;
+      margin-top: auto;
+      padding: 7px 11px;
+      border: 1px solid var(--line);
+      background: var(--page);
+      color: var(--blue);
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .read-more:hover,
+    .read-more:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: 2px;
+    }
+
+    .mission-facts {
+      display: grid;
+      gap: 8px;
+      margin: 0 0 16px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .mission-facts li {
+      padding-left: 12px;
+      border-left: 2px solid var(--line);
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .mission-facts strong {
+      color: var(--ink);
+    }
+
+    .mission-chapters {
+      display: block;
+      margin: 0 0 16px;
+    }
+
+    .chapter h3 {
+      display: none;
+    }
+
+    .chapter p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .chapter:last-child p {
+      margin-bottom: 0;
+    }
+
+    .status {
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      color: var(--ink);
+      font-size: 0.9rem;
+    }
+
+    .status strong {
+      color: var(--blue);
+    }
+
+    .big-question {
+      margin-top: 28px;
+      padding: 20px 22px;
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--blue);
+      border-radius: 10px;
+      background: var(--pale-blue);
+      animation: fade-up 600ms 180ms ease-out both;
+    }
+
+    .big-question h2 {
+      margin-bottom: 5px;
+    }
+
+    .big-question p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .story-detail[hidden] {
+      display: none;
+    }
+
+    .story-detail {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: grid;
+      place-items: center;
+      padding: 5vh 7vw;
+      background: rgba(5, 8, 22, 0.72);
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: var(--blue);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .detail-card {
+      position: relative;
+      width: min(100%, 1200px);
+      height: min(90vh, 900px);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--paper);
+      box-shadow: 0 8px 24px rgba(75, 74, 70, 0.07);
+      animation: fade-up 400ms ease-out both;
+      overflow-y: auto;
+    }
+
+    .detail-close {
+      position: sticky;
+      top: 12px;
+      z-index: 1;
+      float: right;
+      margin: 12px 12px 0 0;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .detail-image {
+      display: block;
+      width: 100%;
+      max-height: 560px;
+      object-fit: cover;
+      background: #dce8f2;
+    }
+
+    .detail-content {
+      padding: clamp(22px, 4vw, 48px);
+    }
+
+    .detail-content h1 {
+      margin-bottom: 16px;
+    }
+
+    .detail-content p {
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    footer {
+      padding: 18px 0 28px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .footer-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    @media (max-width: 900px) {
+      .stories {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      main {
+        padding-top: 32px;
+      }
+
+      .stories {
+        grid-template-columns: 1fr;
+      }
+
+      .story {
+        min-height: 0;
+      }
+
+      .story-detail {
+        padding: 5vh 5vw;
+      }
+
+      .detail-image {
+        max-height: 32vh;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="space-background">
+  <header>
+    <div class="wrap header-content">
+      <div class="brand">A little guide to space exploration</div>
+      <div class="header-actions">
+        <button class="sources-button" id="open-sources" type="button" aria-haspopup="dialog">Sources</button>
+        <button class="about-button" id="open-ai-use" type="button" aria-haspopup="dialog">AI Use</button>
+        <button class="hardware-button" id="open-hardware" type="button" aria-haspopup="dialog">Hardware</button>
+        <button class="about-button" id="open-about" type="button" aria-haspopup="dialog">About</button>
+      </div>
+    </div>
+  </header>
+
+  <dialog class="sources-dialog" id="sources-dialog" aria-labelledby="sources-title">
+    <h2 id="sources-title">Mission sources</h2>
+    <p>Background information for the mission stories:</p>
+    <ul class="sources-list">
+      <li><a href="https://www.nasa.gov/mission/apollo-11/" target="_blank" rel="noopener noreferrer">Apollo 11 and its lunar laser ranging experiment — NASA</a></li>
+      <li><a href="https://science.nasa.gov/mission/viking-1/" target="_blank" rel="noopener noreferrer">Viking 1 — NASA</a></li>
+      <li><a href="https://science.nasa.gov/mission/msl-curiosity/" target="_blank" rel="noopener noreferrer">Curiosity — NASA</a></li>
+      <li><a href="https://science.nasa.gov/mission/voyager/" target="_blank" rel="noopener noreferrer">Voyager 1 — NASA</a></li>
+      <li><a href="https://science.nasa.gov/mission/hubble/" target="_blank" rel="noopener noreferrer">Hubble Space Telescope — NASA</a></li>
+      <li><a href="https://science.nasa.gov/mission/lro/" target="_blank" rel="noopener noreferrer">Lunar Reconnaissance Orbiter — NASA</a></li>
+      <li><a href="https://science.nasa.gov/mission/pioneer-10/" target="_blank" rel="noopener noreferrer">Pioneer 10 — NASA</a></li>
+      <li><a href="https://science.nasa.gov/mission/mars-2020-perseverance/" target="_blank" rel="noopener noreferrer">Perseverance — NASA</a></li>
+      <li><a href="https://science.nasa.gov/mission/cassini/" target="_blank" rel="noopener noreferrer">Cassini — NASA</a></li>
+      <li><a href="https://www.planetary.org/space-missions/change-4" target="_blank" rel="noopener noreferrer">Chang’e 4 — The Planetary Society</a></li>
+      <li><a href="https://science.nasa.gov/mission/magellan/" target="_blank" rel="noopener noreferrer">Magellan — NASA</a></li>
+    </ul>
+    <button class="sources-close" id="close-sources" type="button">Close</button>
+  </dialog>
+
+  <dialog class="about-dialog" id="ai-use-dialog" aria-labelledby="ai-use-title">
+    <h2 id="ai-use-title">How Super Intelligence was used</h2>
+    <p>Super Intelligence supported the development of this website in the following ways:</p>
+    <ul>
+      <li><strong>Website design:</strong> Helped explore and refine the page layout, visual styling, and presentation of the NASA mission stories.</li>
+      <li><strong>Debugging:</strong> Helped review the HTML, CSS, and JavaScript, identify potential issues, and suggest fixes for interactive features and responsive behavior.</li>
+      <li><strong>Human review:</strong> Suggestions were used as development assistance; the project author reviewed the site and its content.</li>
+    </ul>
+    <button class="about-close" id="close-ai-use" type="button">Close</button>
+  </dialog>
+
+  <dialog class="hardware-dialog" id="hardware-dialog" aria-labelledby="hardware-title">
+    <h2 id="hardware-title">Mission hardware guide</h2>
+    <p>Explore the spacecraft, instruments, and engineering that made each mission work.</p>
+    <div class="hardware-tabs" id="hardware-tabs" role="tablist" aria-label="Mission hardware"></div>
+    <div id="hardware-panels"></div>
+    <button class="hardware-close" id="close-hardware" type="button">Close</button>
+  </dialog>
+
+  <dialog class="about-dialog" id="about-dialog" aria-labelledby="about-title">
+    <h2 id="about-title">About this project</h2>
+    <p>This student project highlights spacecraft, landers, telescopes, and experiments that remain in space or on other worlds. The idea is to show that exploration does not end when a mission is declared complete: some machines keep working for years, and even the ones that have gone quiet still have a lasting scientific legacy.</p>
+    <p>From the Moon to Mars, from deep space to Earth orbit, these objects carry on the work of discovery long after their launch. Some are still collecting data, while others continue to influence the next generation of missions by teaching us what is possible, what is fragile, and what still remains to be explored.</p>
+    <p>It is a small, human-scale guide to a much larger story: how NASA and partner missions leave behind traces of engineering, curiosity, and wonder that can still shape our understanding of the solar system decades later.</p>
+    <button class="about-close" id="close-about" type="button">Close</button>
+  </dialog>
+
+  <main class="wrap">
+    <section class="intro" aria-labelledby="page-title">
+      <h1>NASA hardware is still out there.</h1>
+      <p>
+        Since the 1960s, NASA machines have explored the Moon, Mars, and beyond.
+        Some finished their missions long ago. Others are still helping us learn.
+        Here are a few of their stories.
+      </p>
+    </section>
+
+    <section aria-label="Space hardware stories">
+      <div class="stories" id="stories">
+        <article class="story" data-place="moon" tabindex="0" role="link" aria-label="Read the full story: Apollo 11's Moon mirror">
+          <img class="mission-image" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/A_Man_on_the_Moon%2C_AS11-40-5903_%28cropped%29.jpg/960px-A_Man_on_the_Moon%2C_AS11-40-5903_%28cropped%29.jpg" alt="Apollo 11 astronaut working on the lunar surface">
+          <div class="story-content">
+            <div class="story-topline">
+              <span class="location">Moon</span>
+              <span>1969</span>
+            </div>
+            <h2>Apollo 11's Moon mirror</h2>
+            <p>A small experiment with a remarkably long afterlife.</p>
+            <p>Called a lunar laser ranging retroreflector, the array sends incoming light back toward its source. Because it has no moving parts or power supply, it can remain useful on the lunar surface for decades.</p>
+            <div class="mission-chapters">
+              <section class="chapter"><h3>Chapter 1: A quiet installation</h3><p>In July 21, 1969, astronauts on board Apollo 11 mission installed a small mirror device made up of corner-cube reflectors on the Moon’s surface. This was a device that would work even after the astronauts left the Moon.</p></section>
+              <section class="chapter"><h3>Chapter 2: A signal across space</h3><p>Observatories now direct a brief laser pulse towards the array. Some light particles travel from the observatory and back again, and the time taken is measured.</p></section>
+              <section class="chapter"><h3>Chapter 3: Measuring a changing Moon</h3><p>Multiple observations have helped in determining the distance between Earth and Moon with great accuracy. These enable scientists to examine the movement of the moon and the theory of gravity through it.</p></section>
+            </div>
+            <div class="status"><strong>Status:</strong> Still useful — no batteries needed.</div>
+          </div>
+        </article>
+
+        <article class="story" data-place="mars" tabindex="0" role="link" aria-label="Read the full story: Viking 1 lander">
+          <img class="mission-image" src="https://images-assets.nasa.gov/image/PIA00571/PIA00571~orig.jpg" alt="A view of the Martian landscape captured by a Viking lander">
+          <div class="story-content">
+            <div class="story-topline">
+              <span class="location">Mars</span>
+              <span>1976</span>
+            </div>
+            <h2>Viking 1 lander</h2>
+            <p>Viking 1 brought a full science laboratory to the Martian surface.</p>
+            <div class="mission-chapters">
+              <section class="chapter"><h3>Chapter 1: Touchdown</h3><p>Having traveled for a considerable distance from the Earth, the Viking 1 reached the planet Mars on 20 July 1976, marking the first successful landing of an American space probe on this alien world.</p></section>
+              <section class="chapter"><h3>Chapter 2: A laboratory on another world</h3><p>It took photographs of its rugged terrain, measured the climate conditions in its vicinity, and conducted tests on soil samples from Mars. It performed biological tests to detect the presence of microorganisms but could not prove their presence.</p></section>
+              <section class="chapter"><h3>Chapter 3: The first long look</h3><p>The visuals and data collected by Viking provided the first long-range look at the Martian landscape for scientists. Although the lander ultimately became dormant, its data proved invaluable in shaping future missions.</p></section>
+            </div>
+            <div class="status"><strong>Status:</strong> Mission complete; the lander remains on Mars.</div>
+          </div>
+        </article>
+
+        <article class="story" data-place="mars" tabindex="0" role="link" aria-label="Read the full story: Curiosity rover">
+          <img class="mission-image" src="https://images-assets.nasa.gov/image/PIA19808/PIA19808~orig.jpg" alt="NASA's Curiosity rover on the surface of Mars">
+          <div class="story-content">
+            <div class="story-topline">
+              <span class="location">Mars</span>
+              <span>2012</span>
+            </div>
+            <h2>Curiosity rover</h2>
+            <p>A car-sized rover investigating whether ancient Mars could have supported microbial life.</p>
+            <p>Curiosity landed inside Gale Crater in August 2012. Its route across the crater floor and up Mount Sharp lets scientists examine layers of rock formed in different ancient environments.</p>
+            <div class="mission-chapters">
+              <section class="chapter"><h3>Chapter 1: A landing inside an ancient crater</h3><p>In August 2012, Curiosity landed on Mars in Gale Crater. It has started to investigate an area where the rocks contain information about the transformation of Mars over billions of years.</p></section>
+              <section class="chapter"><h3>Chapter 2: Reading the rocks</h3><p>With cameras, a drill, and instruments that study rock, soil, and air, Curiosity acts as a mobile field laboratory. It travels carefully, choosing places where each new layer can add another piece to the story.</p></section>
+              <section class="chapter"><h3>Chapter 3: Following the water</h3><p>It has discovered proof of the presence of an environment that contained liquid water and the right chemicals on early Mars. Curiosity is not in search of living beings on Mars but rather if the planet ever had the right conditions for life to thrive.</p></section>
+              <section class="chapter"><h3>Chapter 4: The climb continues</h3><p>While the rover roams around on Mount Sharp, it examines rocks of various periods in time. Every pause reveals to scientists a world that was much more diverse – and maybe even friendlier – than the harsh desert world we see now.</p></section>
+            </div>
+            <div class="status"><strong>Status:</strong> Active — still exploring and sending home science.</div>
+          </div>
+        </article>
+
+        <article class="story" data-place="deep-space" tabindex="0" role="link" aria-label="Read the full story: Voyager 1">
+          <img class="mission-image" src="https://images-assets.nasa.gov/image/PIA17046/PIA17046~orig.jpg" alt="A view of Earth from the distant Voyager spacecraft">
+          <div class="story-content">
+            <div class="story-topline">
+              <span class="location">Deep space</span>
+              <span>1977</span>
+            </div>
+            <h2>Voyager 1</h2>
+            <p>Launched in 1977, Voyager 1 turned a planetary tour into a journey beyond the Sun's bubble.</p>
+            <p>After its Saturn encounter, the spacecraft continued outward on a path that took it across the heliopause in 2012. Its great distance means radio messages take many hours to travel between Voyager and Earth.</p>
+            <div class="mission-chapters">
+              <section class="chapter"><h3>Chapter 1: The outer planets</h3><p>In 1977, Voyager 1 was launched to make up close encounters with Jupiter and Saturn. This spacecraft helped to discover active planets, complex rings, and moons, which were used for future investigations.</p></section>
+              <section class="chapter"><h3>Chapter 2: Beyond the Sun's bubble</h3><p>Saturn was followed by a further journey out into space. In 2012, the spacecraft crossed the heliopause and started sampling the space beyond the influence of the sun’s magnetic field.</p></section>
+              <section class="chapter"><h3>Chapter 3: A distant conversation</h3><p>However, it transmits information using radio waves from the Earth despite the great distance between it and the Earth where any transmission takes several hours. Some equipment continues sending information while the energy source gradually runs out.</p></section>
+              <section class="chapter"><h3>Chapter 4: A greeting carried forward</h3><p>Attached to the spacecraft is a golden record filled with sound, music, and greetings from our planet Earth. It acts as a time capsule for whoever finds it, while Voyager keeps traveling silently through the cosmos.</p></section>
+            </div>
+            <div class="status"><strong>Status:</strong> Still traveling; some instruments continue to send data.</div>
+          </div>
+        </article>
+
+        <article class="story" data-place="earth-orbit" tabindex="0" role="link" aria-label="Read the full story: Hubble Space Telescope">
+          <img class="mission-image" src="https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001492/GSFC_20171208_Archive_e001492~orig.jpg" alt="The Hubble Space Telescope in orbit above Earth">
+          <div class="story-content">
+            <div class="story-topline">
+              <span class="location">Earth orbit</span>
+              <span>1990</span>
+            </div>
+            <h2>Hubble Space Telescope</h2>
+            <p>Above Earth's atmosphere, Hubble captures sharp views across a wide range of light.</p>
+            <div class="mission-chapters">
+              <section class="chapter"><h3>Chapter 1: Above the blur</h3><p>The Hubble Telescope was launched into space in 1990. It began observing without the interference of Earth’s atmosphere that distorts incoming light. When there were some problems with its mirror, astronauts traveled to it and installed corrective lenses.</p></section>
+              <section class="chapter"><h3>Chapter 2: A changing universe</h3><p>Throughout the years, astronauts have returned to fix and improve Hubble. Hubble has been used to observe planets, star formation areas, and remote galaxies across different wavelengths..</p></section>
+              <section class="chapter"><h3>Chapter 3: Looking back in time</h3><p>As light needs time to move, distant observations reveal what our universe used to look like in the past. The photographs taken by Hubble allow scientists to study the formation and evolution of stars and galaxies.</p></section>
+            </div>
+            <div class="status"><strong>Status:</strong> Active — still observing the universe from orbit.</div>
+          </div>
+        </article>
+
+        <article class="story" data-place="moon" tabindex="0" role="link" aria-label="Read the full story: Lunar Reconnaissance Orbiter">
+          <img class="mission-image" src="https://images-assets.nasa.gov/image/PIA18072/PIA18072~orig.jpg" alt="The Moon's surface seen by the Lunar Reconnaissance Orbiter">
+          <div class="story-content">
+            <div class="story-topline">
+              <span class="location">Moon</span>
+              <span>2009</span>
+            </div>
+            <h2>Lunar Reconnaissance Orbiter</h2>
+            <p>LRO is building a detailed picture of the Moon to support science and future exploration.</p>
+            <div class="mission-chapters">
+              <section class="chapter"><h3>Chapter 1: A new map of the Moon</h3><p>The Lunar Reconnaissance Orbiter was put into lunar orbit in 2009. Using their instruments from the sky above, they were able to map and take measurements that showed how diverse the surface of the moon can be.</p></section>
+              <section class="chapter"><h3>Chapter 2: Searching the shadows</h3><p>Some of the craters in the polar areas never get direct sunlight and are very cold. The studies by LRO help the scientists study such areas.</p></section>
+              <section class="chapter"><h3>Chapter 3: Preparing to return</h3><p>These tools enable researchers to analyze various possible landing sites and to plan for future exploration. Every time that we orbit, it brings more information about the regions where we will one day operate on the Moon again.</p></section>
+            </div>
+            <div class="status"><strong>Status:</strong> Active — still orbiting and mapping the Moon.</div>
+          </div>
+        </article>
+
+        <article class="story" data-place="deep-space" tabindex="0" role="link" aria-label="Read the full story: Pioneer 10">
+          <img class="mission-image" src="https://images-assets.nasa.gov/image/PIA21436/PIA21436~orig.jpg" alt="Pioneer 10 in deep space beyond the planets">
+          <div class="story-content">
+            <div class="story-topline">
+              <span class="location">Deep space</span>
+              <span>1972</span>
+            </div>
+            <h2>Pioneer 10</h2>
+            <p>Pioneer 10 opened the way for later missions to the outer Solar System.</p>
+            <div class="mission-chapters">
+              <section class="chapter"><h3>Chapter 1: A first crossing</h3><p>The spacecraft Pioneer 10 was launched in 1972 on a journey towards the distant parts of the Solar System. The year 1973 brought it a record-breaking encounter with the planet Jupiter, which showed that it is possible for a craft to travel through the asteroid belt.</p></section>
+              <section class="chapter"><h3>Chapter 2: Meeting Jupiter</h3><p>Pioneer took pictures and made measurements of the planet and its environment as it flew by the planet. This helped scientists understand what the environment around Jupiter was like and paved the way for future spacecraft.</p></section>
+              <section class="chapter"><h3>Chapter 3: A signal fades</h3><p>Pioneer 10 kept going after the encounter mission. The spacecraft sent its last signal in 2003, and it is now silent, but continues on its journey through space.</p></section>
+            </div>
+            <div class="status"><strong>Status:</strong> Silent but still drifting outward in deep space.</div>
+          </div>
+        </article>
+
+        <article class="story" data-place="mars" tabindex="0" role="link" aria-label="Read the full story: Perseverance rover">
+          <img class="mission-image" src="https://images-assets.nasa.gov/image/PIA24631/PIA24631~orig.jpg" alt="Perseverance rover on the surface of Mars">
+          <div class="story-content">
+            <div class="story-topline">
+              <span class="location">Mars</span>
+              <span>2021</span>
+            </div>
+            <h2>Perseverance rover</h2>
+            <p>The rover searching for ancient biosignatures and collecting samples for the future.</p>
+            <div class="mission-chapters">
+              <section class="chapter"><h3>Chapter 1: Jezero Crater</h3><p>The rover Perseverance touched down on Mars in 2021 within Jezero Crater, which once hosted a lake containing minerals that could hold evidence of habitable conditions.</p></section>
+              <section class="chapter"><h3>Chapter 2: A powered field lab</h3><p>The cameras, drills, and scientific tools will be used to examine rocks and dust on the planet and test equipment that can be used on future missions to Mars.</p></section>
+              <section class="chapter"><h3>Chapter 3: Sample return prep</h3><p>Perseverance is storing up samples that one day may be returned back to Earth, thus building a connection between today’s exploration and future analysis on Earth.</p></section>
+            </div>
+            <div class="status"><strong>Status:</strong> Active — still exploring and collecting scientifically valuable samples.</div>
+          </div>
+        </article>
+
+        <article class="story" data-place="saturn" tabindex="0" role="link" aria-label="Read the full story: Cassini spacecraft">
+          <img class="mission-image" src="https://images-assets.nasa.gov/image/PIA17172/PIA17172~orig.jpg" alt="Cassini spacecraft crossing Saturn's rings and moons">
+          <div class="story-content">
+            <div class="story-topline">
+              <span class="location">Saturn</span>
+              <span>1997</span>
+            </div>
+            <h2>Cassini</h2>
+            <p>One of the most revealing investigations of the ringed planet and its moons.</p>
+            <div class="mission-chapters">
+              <section class="chapter"><h3>Chapter 1: Arrival</h3><p>Cassini arrived at Saturn in 2004 after an extensive interplanetary voyage, embarking on a 13-year mission that changed our perspective about the planet’s system.</p></section>
+              <section class="chapter"><h3>Chapter 2: Ring and moon science</h3><p>The spacecraft mapped out the complex ring system of the planet, analyzed the atmosphere of Saturn and discovered active worlds like Enceladus and Titan.</p></section>
+              <section class="chapter"><h3>Chapter 3: End of mission</h3><p>Cassini deliberately terminated its mission with a plunge into the Saturnian atmosphere in 2017 to safeguard satellites such as Enceladus.</p></section>
+            </div>
+            <div class="status"><strong>Status:</strong> Mission complete; its legacy continues in the data it returned.</div>
+          </div>
+        </article>
+
+        <article class="story" data-place="moon" tabindex="0" role="link" aria-label="Read the full story: Chang'e 4 lander">
+          <img class="mission-image" src="https://images-assets.nasa.gov/image/PIA22952/PIA22952~orig.jpg" alt="The Chang'e 4 lander on the far side of the Moon">
+          <div class="story-content">
+            <div class="story-topline">
+              <span class="location">Moon</span>
+              <span>2019</span>
+            </div>
+            <h2>Chang'e 4</h2>
+            <p>The first mission to make a soft landing on the far side of the Moon.</p>
+            <div class="mission-chapters">
+              <section class="chapter"><h3>Chapter 1: A hidden hemisphere</h3><p>Landing Site: The Chinese probe Chang’e 4 made its landing on the surface of the Von Kármán crater on the Moon’s far side for the first time ever.</p></section>
+              <section class="chapter"><h3>Chapter 2: Lunar communication</h3><p>It utilized a relay satellite that was placed in space to communicate with the far side, which is inaccessible directly from Earth.</p></section>
+              <section class="chapter"><h3>Chapter 3: A scientific first</h3><p>The mission investigated the lunar surface, analyzed its surrounding environment, and captured images that have revolutionized our scientific perception of the Moon’s far side.</p></section>
+            </div>
+            <div class="status"><strong>Status:</strong> Active — still operating and relaying lunar data.</div>
+          </div>
+        </article>
+
+        <article class="story" data-place="venus" tabindex="0" role="link" aria-label="Read the full story: Magellan orbiter">
+          <img class="mission-image" src="https://images-assets.nasa.gov/image/PIA00120/PIA00120~orig.jpg" alt="Magellan radar image of Venus's volcanic surface">
+          <div class="story-content">
+            <div class="story-topline">
+              <span class="location">Venus</span>
+              <span>1989</span>
+            </div>
+            <h2>Magellan</h2>
+            <p>Venus’s cloud-shrouded surface was mapped in extraordinary detail by radar.</p>
+            <div class="mission-chapters">
+              <section class="chapter"><h3>Chapter 1: Radar from orbit</h3><p>Magellan employed the use of radar technology in order to be able to see through the dense clouds surrounding Venus and create a very accurate map of the planet's surface.</p></section>
+              <section class="chapter"><h3>Chapter 2: A world of volcanoes</h3><p>The maps provided an indication of vast regions of volcanoes and geologically formed landscapes. This information widened the knowledge about the sister planet of the earth.</p></section>
+              <section class="chapter"><h3>Chapter 3: A long afterlife</h3><p>After many years of functioning, Magellan concluded its project by entering the atmosphere of Venus in 1994. The results obtained have remained basic until nowadays.</p></section>
+            </div>
+            <div class="status"><strong>Status:</strong> Mission complete; its radar maps are still used by scientists.</div>
+          </div>
+        </article>
+
+        <article class="story" data-place="moon" tabindex="0" role="link" aria-label="Read the full story: Apollo 15 lunar rover">
+          <img class="mission-image" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ed/Apollo15LunarRover.jpg/960px-Apollo15LunarRover.jpg" alt="The Apollo 15 lunar rover on the surface of the Moon">
+          <div class="story-content">
+            <div class="story-topline">
+              <span class="location">Moon</span>
+              <span>1971</span>
+            </div>
+            <h2>Apollo 15 lunar rover</h2>
+            <p>A fold-out mobility system that made the lunar surface feel much larger.</p>
+            <div class="mission-chapters">
+              <section class="chapter"><h3>Chapter 1: The first long-distance drive</h3><p>Dave Scott and Jim Irwin rode in the Lunar Roving Vehicle to distances away from the point of touchdown on the lunar surface, exploring much more territory than previous moonwalkers on foot were able to do.</p></section>
+              <section class="chapter"><h3>Chapter 2: Science on wheels</h3><p>The rover was loaded with equipment, samples, and supplies for the astronauts while allowing them to collect rock samples and examine the lunar surface over a large area. It extended the brief stop into an extensive geological study.</p></section>
+              <section class="chapter"><h3>Chapter 3: A lasting footprint</h3><p>Although the mission had been completed, the marks and hardware left behind by the rover were left as a record of the expanded range that astronauts could achieve. It illustrated the idea that having mobility could alter what science the crew could conduct away from its landing site.</p></section>
+            </div>
+            <div class="status"><strong>Status:</strong> Mission complete; the rover remains on the Moon.</div>
+          </div>
+        </article>
+
+        <article class="story" data-place="mars" tabindex="0" role="link" aria-label="Read the full story: Opportunity rover">
+          <img class="mission-image" src="https://images-assets.nasa.gov/image/PIA17563/PIA17563~orig.jpg" alt="Opportunity rover exploring the Martian surface">
+          <div class="story-content">
+            <div class="story-topline">
+              <span class="location">Mars</span>
+              <span>2004</span>
+            </div>
+            <h2>Opportunity rover</h2>
+            <p>A small robot that outlived its expected mission by years and changed how we think about Mars.</p>
+            <div class="mission-chapters">
+              <section class="chapter"><h3>Chapter 1: A long journey to an ancient plain</h3><p>Opportunity landed in the Meridiani Planum region in 2004, which had signs of having a past filled with water. It was only supposed to last for 90 sols, but it exhibited a surprisingly resilient spirit.</p></section>
+              <section class="chapter"><h3>Chapter 2: The science kept moving</h3><p>It roamed across the surface of Mars, analyzed rocks and soil, and discovered evidence of liquid water having existed on the Red Planet. The findings allowed linking the conditions on Mars long ago to the emergence of life on Earth.</p></section>
+              <section class="chapter"><h3>Chapter 3: A silent end</h3><p>After a planetwide dust storm occurred in 2018, contact was lost with Opportunity. The rover came to symbolize perseverance and expanded the realm of science further than anyone could have imagined.</p></section>
+            </div>
+            <div class="status"><strong>Status:</strong> Mission complete; the rover remains silent on Mars.</div>
+          </div>
+        </article>
+
+        <article class="story" data-place="deep-space" tabindex="0" role="link" aria-label="Read the full story: New Horizons">
+          <img class="mission-image" src="https://images-assets.nasa.gov/image/PIA19873/PIA19873~orig.jpg" alt="The New Horizons spacecraft in deep space near Pluto">
+          <div class="story-content">
+            <div class="story-topline">
+              <span class="location">Deep space</span>
+              <span>2006</span>
+            </div>
+            <h2>New Horizons</h2>
+            <p>A compact mission that transformed a distant world from a blurry point into a real place.</p>
+            <div class="mission-chapters">
+              <section class="chapter"><h3>Chapter 1: A route to Pluto</h3><p>New Horizons was launched in 2006 on a quest to deliver scientific insights about the dwarf planet and its moons from a relatively close range. The spacecraft got there in 2015 after almost a decade-long journey.</p></section>
+              <section class="chapter"><h3>Chapter 2: Looking past the familiar</h3><p>Its images uncovered the presence of mountains, glaciers, plains, and weather on Pluto. The mission proved that a planet thought to be cold and dormant could indeed be geologically alive and diverse.</p></section>
+              <section class="chapter"><h3>Chapter 3: A path into the Kuiper Belt</h3><p>However, after visiting Pluto, New Horizons continued on its journey further out into the Solar System, exploring icy, small worlds in a region that was virtually impossible to explore in such a way before.</p></section>
+            </div>
+            <div class="status"><strong>Status:</strong> Active — still flying farther into the outer Solar System.</div>
+          </div>
+        </article>
+
+        <article class="story" data-place="jupiter" tabindex="0" role="link" aria-label="Read the full story: Juno orbiter">
+          <img class="mission-image" src="https://images-assets.nasa.gov/image/PIA21922/PIA21922~orig.jpg" alt="Juno orbiter flying over Jupiter's colorful atmosphere">
+          <div class="story-content">
+            <div class="story-topline">
+              <span class="location">Jupiter</span>
+              <span>2011</span>
+            </div>
+            <h2>Juno</h2>
+            <p>An orbiting laboratory working close to Jupiter to reveal the giant planet's inner structure.</p>
+            <div class="mission-chapters">
+              <section class="chapter"><h3>Chapter 1: A dangerous orbit</h3><p>Juno arrived at Jupiter in 2016 and started making passes through Jupiter’s clouds, gathering information from an area that is so difficult and extreme that other spacecraft could not survive there.</p></section>
+              <section class="chapter"><h3>Chapter 2: Measuring the giant</h3><p>Its tools were used to measure Jupiter's magnetic and gravitational fields, study its atmosphere, and gain insights into its formation process and atmospheric dynamics.</p></section>
+              <section class="chapter"><h3>Chapter 3: A persistent observer</h3><p>The spacecraft is still active today, sending information about a planet which seems to be both familiar and mysterious at the same time. This reminds us that even such huge planets are capable of surprising a continuing mission.</p></section>
+            </div>
+            <div class="status"><strong>Status:</strong> Active — still orbiting Jupiter and returning science.</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="story-detail" id="story-detail" role="dialog" aria-modal="true" aria-label="Mission details" aria-live="polite" hidden></section>
+
+    <aside class="big-question">
+      <h2>Why leave machines behind?</h2>
+      <p>
+        Even when people are back at home, the spacecraft will continue to measure, photograph, and provide hints. Even an unmanned device will be capable of leaving behind a worthwhile experiment or a significant landmark.
+        
+      </p>
+    </aside>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <section aria-labelledby="team-title">
+        <h2 id="team-title">Meet Fantastic-2</h2>
+        <p>Fantastic-2 is the team behind this website. Atharva Rao and Adhita Bhawat coded the site; Adhita also wrote the creative content, while Atharva led the ideation and designing of the website.</p>
+        <p>Through this project, we learned how to turn ideas into an engaging website, work together by sharing different responsibilities, and explore the lasting impact of space missions and their hardware.</p>
+      </section>
+      <div class="footer-content">
+        <span>A student project for NASA Space App Challenge</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const sourcesDialog = document.querySelector("#sources-dialog");
+    document.querySelector("#open-sources").addEventListener("click", () => sourcesDialog.showModal());
+    document.querySelector("#close-sources").addEventListener("click", () => sourcesDialog.close());
+
+    const aiUseDialog = document.querySelector("#ai-use-dialog");
+    document.querySelector("#open-ai-use").addEventListener("click", () => aiUseDialog.showModal());
+    document.querySelector("#close-ai-use").addEventListener("click", () => aiUseDialog.close());
+
+    const hardwareDialog = document.querySelector("#hardware-dialog");
+    const hardwareTabs = document.querySelector("#hardware-tabs");
+    const hardwarePanels = document.querySelector("#hardware-panels");
+    const hardwareDetails = [
+      ["Apollo 11's Moon mirror", "The Lunar Laser Ranging Retroreflector (LRRR) is a compact array of 100 fused-silica corner-cube prisms mounted in an aluminum panel. The prisms send laser light back toward its source, allowing observatories to measure the Earth–Moon distance. It needs no power or moving parts.", "Apollo 11 astronauts deployed the panel on a tripod so it faced Earth. Its passive design has endured lunar temperature swings and continues to support precision measurements of lunar motion and gravity."],
+      ["Viking 1 lander", "Viking 1 combined a protective aeroshell and parachute with a rocket-powered soft-landing system. On the surface, its body carried cameras, meteorology sensors, a robotic sample arm, and a biology laboratory that processed Martian soil.", "The lander's radio system sent science and engineering data to Earth, while its power and thermal-control systems kept instruments operating through the cold Martian environment. Its camera pair produced color panoramas of the landing site."],
+      ["Curiosity rover", "Curiosity is a nuclear-powered mobile laboratory. Its radioisotope power system supplies electricity and heat; six wheels and suspension let it cross rough terrain. The robotic arm carries a drill and contact instruments for examining rock directly.", "The mast-mounted cameras and ChemCam laser investigate distant targets. SAM analyzes samples for chemical compounds, while CheMin identifies minerals using X-ray diffraction. These systems let the rover study rocks without returning them to Earth."],
+      ["Voyager 1", "Voyager 1 is a three-axis-stabilized spacecraft with a 3.7-meter high-gain antenna for long-distance radio communication. Three radioisotope thermoelectric generators provide electricity as sunlight becomes too weak to use solar panels.", "Its magnetometer, plasma-wave instrument, and low-energy charged-particle instrument measure the interstellar environment. The spacecraft's computer and attitude-control system carefully point the antenna toward Earth; power-saving shutdowns preserve operation as available energy declines."],
+      ["Hubble Space Telescope", "Hubble is a roughly 2.4-meter-aperture reflecting telescope in low Earth orbit. A precise optical assembly feeds light to cameras and spectrographs, which record images and split light into spectra for study across ultraviolet, visible, and near-infrared wavelengths.", "Solar arrays generate power, reaction wheels control pointing, and gyroscopes help it stay steady during long exposures. Its modular design allowed astronauts to service and upgrade instruments during space-shuttle missions."],
+      ["Lunar Reconnaissance Orbiter", "LRO is a compact lunar orbiter carrying seven instruments. The Lunar Reconnaissance Orbiter Camera takes wide-angle context images and narrow-angle high-resolution images; LOLA uses laser pulses to map lunar elevation and surface roughness.", "Other instruments measure temperature, radiation, and reflected ultraviolet light, while Mini-RF uses radar to examine properties of permanently shadowed regions. Together, the payload maps terrain and helps characterize the lunar environment."],
+      ["Pioneer 10", "Pioneer 10 used a spin-stabilized design: the spacecraft rotated like a gyroscope to remain steady. Its large high-gain antenna communicated with Earth, and radioisotope thermoelectric generators supplied power far from the Sun.", "The science payload included imaging equipment and instruments for measuring Jupiter's magnetic field, radiation belts, charged particles, dust, and meteoroids. A gold-anodized aluminum plaque carried a pictorial message about the spacecraft's origin."],
+      ["Perseverance rover", "Perseverance is a nuclear-powered, six-wheeled rover based on the Curiosity design, with upgraded autonomous navigation and a drill system that seals rock cores in sample tubes. Its mast cameras provide stereo views and help select targets.", "SuperCam studies rocks from a distance using imaging, laser spectroscopy, and sound; PIXL and SHERLOC examine chemistry and minerals up close. MOXIE demonstrated oxygen production from Martian carbon dioxide, and the rover's sample caching system preserves selected specimens."],
+      ["Cassini", "Cassini was a large, three-axis-stabilized orbiter powered by three radioisotope thermoelectric generators. Its high-gain antenna provided communications and also served as a radar dish to map Saturn's cloud-covered moon Titan.", "The orbiter carried cameras, spectrometers, magnetometers, and fields-and-particles instruments. The Huygens probe separated from Cassini and descended through Titan's atmosphere, using parachutes and its own instruments to send measurements from the surface."],
+      ["Chang'e 4", "The Chang'e 4 mission uses a stationary lander and the Yutu-2 rover. The lander carries cameras and scientific instruments, while the rover's wheels, panoramic cameras, and ground-penetrating radar support mobile exploration of the lunar surface and shallow subsurface.", "Because the Moon blocks direct radio contact with the far side, the Queqiao relay satellite was placed near the Earth–Moon L2 region. It relays commands and science data between Earth and the lander-rover pair."],
+      ["Magellan", "Magellan was a Venus orbiter built around synthetic-aperture radar, which transmitted radio pulses and processed their echoes to form surface images through the planet's dense clouds. Radar altimetry measured elevation, while radiometry helped characterize surface properties.", "The spacecraft used a high-gain antenna for radar observations and communications, plus solar panels for power. Its mapping campaign built a near-global picture of Venus and revealed features that cameras in visible light could not see."],
+      ["Apollo 15 lunar rover", "The Lunar Roving Vehicle was a lightweight, battery-powered electric cart folded into the Apollo Lunar Module for landing. Its chassis unfolded on the Moon; four independently driven wheels and steering systems carried two suited astronauts across the surface.", "The rover included hand controllers, navigation displays, fenders, and equipment mounts for tools and samples. Its wire-mesh wheels and low-gravity design provided mobility over uneven terrain, extending the crew's geological range well beyond the landing site."],
+      ["Opportunity rover", "Opportunity was a solar-powered Mars Exploration Rover with six wheels, rocker-bogie suspension, stereo navigation cameras, and a robotic arm. Solar arrays charged rechargeable batteries, while heaters protected electronics through cold Martian nights.", "Its science tools included a panoramic camera, a microscopic imager, a Mössbauer spectrometer, an alpha-particle X-ray spectrometer, and a rock-abrasion tool. These instruments let scientists inspect textures and determine the composition of rocks and soil."],
+      ["New Horizons", "New Horizons is a compact, spin-stabilized spacecraft powered by a radioisotope thermoelectric generator. Its high-gain antenna links it to Earth across billions of kilometers, while onboard computers store data for slow transmission over the distant radio link.", "The payload includes the Ralph visible/infrared imager, the LORRI long-range camera, Alice ultraviolet spectrometer, REX radio-science instrument, and particle and dust sensors. Together they study the surfaces, atmospheres, composition, and space environment of distant worlds."],
+      ["Juno", "Juno is a solar-powered orbiter designed for Jupiter's intense radiation environment. Its three large solar-array wings provide electricity, and its spinning spacecraft uses an articulated high-gain antenna to communicate with Earth.", "A magnetometer boom measures Jupiter's magnetic field; microwave radiometers probe atmospheric water and ammonia, and instruments track gravity, particles, and plasma. JunoCam captures public-facing images, while the spacecraft's polar orbit limits time spent in the harshest radiation belts."]
+    ];
+
+    hardwareDetails.forEach(([mission, ...paragraphs], index) => {
+      const tab = document.createElement("button");
+      const panel = document.createElement("section");
+      const tabId = `hardware-tab-${index}`;
+      const panelId = `hardware-panel-${index}`;
+      tab.className = "hardware-tab";
+      tab.type = "button";
+      tab.id = tabId;
+      tab.setAttribute("role", "tab");
+      tab.setAttribute("aria-controls", panelId);
+      tab.setAttribute("aria-selected", String(index === 0));
+      tab.tabIndex = index === 0 ? 0 : -1;
+      tab.textContent = mission;
+      panel.className = "hardware-panel";
+      panel.id = panelId;
+      panel.setAttribute("role", "tabpanel");
+      panel.setAttribute("aria-labelledby", tabId);
+      panel.hidden = index !== 0;
+      paragraphs.forEach((text) => {
+        const paragraph = document.createElement("p");
+        paragraph.textContent = text;
+        panel.append(paragraph);
+      });
+      tab.addEventListener("click", () => selectHardwareTab(index));
+      tab.addEventListener("keydown", (event) => {
+        if (!["ArrowRight", "ArrowLeft", "Home", "End"].includes(event.key)) return;
+        event.preventDefault();
+        const next = event.key === "Home" ? 0 : event.key === "End" ? hardwareDetails.length - 1 : (index + (event.key === "ArrowRight" ? 1 : -1) + hardwareDetails.length) % hardwareDetails.length;
+        selectHardwareTab(next);
+        hardwareTabs.children[next].focus();
+      });
+      hardwareTabs.append(tab);
+      hardwarePanels.append(panel);
+    });
+
+    function selectHardwareTab(index) {
+      [...hardwareTabs.children].forEach((tab, tabIndex) => {
+        const selected = tabIndex === index;
+        tab.setAttribute("aria-selected", String(selected));
+        tab.tabIndex = selected ? 0 : -1;
+        hardwarePanels.children[tabIndex].hidden = !selected;
+      });
+    }
+
+    document.querySelector("#open-hardware").addEventListener("click", () => hardwareDialog.showModal());
+    document.querySelector("#close-hardware").addEventListener("click", () => hardwareDialog.close());
+
+    const aboutDialog = document.querySelector("#about-dialog");
+    document.querySelector("#open-about").addEventListener("click", () => aboutDialog.showModal());
+    document.querySelector("#close-about").addEventListener("click", () => aboutDialog.close());
+
+    const stories = document.querySelectorAll(".story");
+    const storyListSection = document.querySelector('[aria-label="Space hardware stories"]');
+    const detailView = document.querySelector("#story-detail");
+    const intro = document.querySelector(".intro");
+    const bigQuestion = document.querySelector(".big-question");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    stories.forEach((story) => {
+      observer.observe(story);
+
+      const readMore = document.createElement("button");
+      readMore.className = "read-more";
+      readMore.type = "button";
+      readMore.textContent = "Read more";
+      readMore.setAttribute("aria-label", `Read more about ${story.querySelector("h2").textContent}`);
+      story.querySelector(".story-content").append(readMore);
+
+      const openStory = () => {
+        const index = [...stories].indexOf(story);
+        location.hash = `story-${index + 1}`;
+      };
+
+      readMore.addEventListener("click", openStory);
+    });
+
+    function renderRoute() {
+      const match = location.hash.match(/^#story-(\d+)$/);
+      const story = match ? stories[Number(match[1]) - 1] : null;
+
+      if (!story) {
+        detailView.hidden = true;
+        document.body.style.overflow = "";
+        detailView.replaceChildren();
+        return;
+      }
+
+      const image = story.querySelector(".mission-image").cloneNode(true);
+      image.className = "detail-image";
+      const content = story.querySelector(".story-content").cloneNode(true);
+      content.className = "detail-content";
+      content.querySelector(".read-more")?.remove();
+      const heading = content.querySelector("h2");
+      const title = heading.textContent;
+      heading.outerHTML = `<h1>${title}</h1>`;
+      const card = document.createElement("div");
+      card.className = "detail-card";
+      const closeButton = document.createElement("button");
+      closeButton.className = "detail-close";
+      closeButton.type = "button";
+      closeButton.setAttribute("aria-label", "Close mission details");
+      closeButton.textContent = "Close ×";
+      closeButton.addEventListener("click", () => { location.hash = "stories"; });
+      card.append(closeButton, image, content);
+      detailView.replaceChildren(card);
+      detailView.hidden = false;
+      document.body.style.overflow = "hidden";
+      closeButton.focus();
+    }
+
+    window.addEventListener("hashchange", renderRoute);
+    detailView.addEventListener("click", (event) => {
+      if (event.target === detailView) location.hash = "stories";
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !detailView.hidden) location.hash = "stories";
+    });
+
+    renderRoute();
+  </script>
+</body>
+</html>
